@@ -67,17 +67,34 @@ alter table visits enable row level security;
 alter table quiz_results enable row level security;
 
 -- 4. 정책: 콘텐츠 뱅크는 읽기만 공개 (수정은 service_role로만, 정책 없이도 service_role은 RLS 우회)
+-- drop policy if exists로 먼저 지운 뒤 다시 만들어서, 스크립트를 여러 번 실행해도 안전하다.
+drop policy if exists "content read (words)" on words;
 create policy "content read (words)" on words for select using (true);
+
+drop policy if exists "content read (idioms)" on idioms;
 create policy "content read (idioms)" on idioms for select using (true);
+
+drop policy if exists "content read (verses)" on verses;
 create policy "content read (verses)" on verses for select using (true);
 
 -- 5. 정책: 학습 기록은 공개 키로 읽기/쓰기(insert) 허용, 수정/삭제는 불가
+drop policy if exists "daily_log read" on daily_log;
 create policy "daily_log read" on daily_log for select using (true);
+
+drop policy if exists "daily_log insert" on daily_log;
 create policy "daily_log insert" on daily_log for insert with check (true);
+
+drop policy if exists "daily_log update" on daily_log;
 create policy "daily_log update" on daily_log for update using (true); -- 같은 날 재실행 시 덮어쓰기 허용
 
+drop policy if exists "visits read" on visits;
 create policy "visits read" on visits for select using (true);
+
+drop policy if exists "visits insert" on visits;
 create policy "visits insert" on visits for insert with check (true);
 
+drop policy if exists "quiz_results read" on quiz_results;
 create policy "quiz_results read" on quiz_results for select using (true);
+
+drop policy if exists "quiz_results insert" on quiz_results;
 create policy "quiz_results insert" on quiz_results for insert with check (true);
