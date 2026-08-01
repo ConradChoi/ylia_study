@@ -1204,11 +1204,11 @@ Expected: push 성공, `https://github.com/ConradChoi/ylia_study`에서 커밋 �
 2. 그 데이터를 바탕으로:
    - 단어 10개 각각에 대해 자연스러운 영어 예문 문장을 새로 만든다 (sentence 필드).
    - 숙어에 대해서도 예문 문장을 만든다 (sentence 필드).
-   - 단어 10개 + 숙어 1개를 기준으로 퀴즈 10문항을 만든다 (각 {question, answer}, 단어/숙어의 뜻을 묻거나 빈칸을 채우는 형식).
+   - 단어 10개 + 숙어 1개를 기준으로 퀴즈 10문항을 만든다 (각 {question, answer, itemType, itemId}, 단어/숙어의 뜻을 묻거나 빈칸을 채우는 형식). `itemType`은 그 문제가 단어에 대한 것이면 `"word"`, 숙어에 대한 것이면 `"idiom"`. `itemId`는 select-today.js 출력의 해당 단어(`words[i].id`) 또는 숙어(`idiom.id`)의 실제 Supabase `id` 값을 그대로 사용한다 (배열 인덱스나 임의의 번호가 아니라 실제 DB id).
    - 성경구절의 translation 값이 "NIV"면 niv 필드를, "KJV"면 kjv 필드를 displayedText로, translation 값을 displayedTranslation으로 사용한다. original_language를 originalLanguage로, original_text를 originalText로 그대로 옮긴다.
 3. 위에서 만든 내용을 다음 구조의 JSON 객체로 만들어 `/tmp/today-data.json`에 저장한다:
-   `{ date, words: [{word, pronunciation, meaning, sentence}, ...10개], idiom: {idiom, meaning, sentence}, quiz: [{question, answer}, ...10개], verse: {reference, krv, displayedTranslation, displayedText, originalLanguage, originalText, vocab} }`
-   (date는 select-today.js 출력의 date 값을 그대로 쓴다)
+   `{ date, words: [{word, pronunciation, meaning, sentence}, ...10개], idiom: {idiom, meaning, sentence}, quiz: [{question, answer, itemType, itemId}, ...10개], verse: {reference, krv, displayedTranslation, displayedText, originalLanguage, originalText, vocab} }`
+   (date는 select-today.js 출력의 date 값을 그대로 쓴다. quiz 각 항목의 itemId는 select-today.js가 반환한 words/idiom 데이터의 실제 id 필드를 참조해야 한다.)
 4. `node scripts/render-page.js /tmp/today-data.json > site/index.html` 실행
 5. 같은 내용을 `site/archive/<date>.html`에도 저장 (site/archive 디렉터리가 없으면 만든다)
 6. `node scripts/build-archive-index.js site/archive site/archive/index.html` 실행해서 아카이브 목록 갱신

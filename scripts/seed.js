@@ -1,8 +1,15 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { SUPABASE_URL } = require('./supabase-config');
+const { fetchAll } = require('./supabase-rest');
 
 const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+function assertTableEmpty(table, rows) {
+  if (Array.isArray(rows) && rows.length > 0) {
+    throw new Error(`${table} table already has ${rows.length} rows — seed.js is meant to run once; refusing to duplicate data. If you really want to re-seed, truncate the table first via the Supabase dashboard.`);
+  }
+}
 
 async function insertTable(table, rows) {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
@@ -29,6 +36,15 @@ async function main() {
   const idioms = JSON.parse(fs.readFileSync(path.join(dataDir, 'idioms.json'), 'utf8'));
   const verses = JSON.parse(fs.readFileSync(path.join(dataDir, 'verses.json'), 'utf8'));
 
+  const [existingWords, existingIdioms, existingVerses] = await Promise.all([
+    fetchAll('words'),
+    fetchAll('idioms'),
+    fetchAll('verses'),
+  ]);
+  assertTableEmpty('words', existingWords);
+  assertTableEmpty('idioms', existingIdioms);
+  assertTableEmpty('verses', existingVerses);
+
   await insertTable('words', words);
   console.log(`words: ${words.length}건 저장 완료`);
   await insertTable('idioms', idioms);
@@ -37,7 +53,11 @@ async function main() {
   console.log(`verses: ${verses.length}건 저장 완료`);
 }
 
-main().catch(err => {
-  console.error(err);
-  process.exit(1);
-});
+if (require.main === module) {
+  main().catch(err => {
+    console.error(err);
+    process.exit(1);
+  });
+}
+
+module.exports = { assertTableEmpty };

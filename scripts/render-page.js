@@ -8,6 +8,73 @@ function escapeHtml(str) {
     .replaceAll('"', '&quot;');
 }
 
+function isNonEmptyString(value) {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
+function isPositiveInteger(value) {
+  return Number.isInteger(value) && value > 0;
+}
+
+function requireNonEmptyString(value, label) {
+  if (!isNonEmptyString(value)) {
+    throw new Error(`validateDay: ${label} must be a non-empty string (got ${JSON.stringify(value)})`);
+  }
+}
+
+function validateDay(day) {
+  if (!day || typeof day !== 'object') {
+    throw new Error('validateDay: day must be an object');
+  }
+
+  if (!Array.isArray(day.words) || day.words.length !== 10) {
+    throw new Error(`validateDay: day.words must be an array of exactly 10 items (got ${Array.isArray(day.words) ? day.words.length : typeof day.words})`);
+  }
+  day.words.forEach((w, i) => {
+    for (const field of ['word', 'pronunciation', 'meaning', 'sentence']) {
+      requireNonEmptyString(w && w[field], `day.words[${i}].${field}`);
+    }
+  });
+
+  if (!day.idiom || typeof day.idiom !== 'object') {
+    throw new Error('validateDay: day.idiom must be an object');
+  }
+  for (const field of ['idiom', 'meaning', 'sentence']) {
+    requireNonEmptyString(day.idiom[field], `day.idiom.${field}`);
+  }
+
+  if (!Array.isArray(day.quiz) || day.quiz.length === 0) {
+    throw new Error(`validateDay: day.quiz must be a non-empty array (got ${Array.isArray(day.quiz) ? 'empty array' : typeof day.quiz})`);
+  }
+  day.quiz.forEach((q, i) => {
+    for (const field of ['question', 'answer']) {
+      requireNonEmptyString(q && q[field], `day.quiz[${i}].${field}`);
+    }
+    if (!q || (q.itemType !== 'word' && q.itemType !== 'idiom')) {
+      throw new Error(`validateDay: day.quiz[${i}].itemType must be 'word' or 'idiom' (got ${JSON.stringify(q && q.itemType)})`);
+    }
+    if (!isPositiveInteger(q.itemId)) {
+      throw new Error(`validateDay: day.quiz[${i}].itemId must be a positive integer (got ${JSON.stringify(q && q.itemId)})`);
+    }
+  });
+
+  if (!day.verse || typeof day.verse !== 'object') {
+    throw new Error('validateDay: day.verse must be an object');
+  }
+  for (const field of ['reference', 'krv', 'displayedText', 'originalText']) {
+    requireNonEmptyString(day.verse[field], `day.verse.${field}`);
+  }
+  if (day.verse.displayedTranslation !== 'NIV' && day.verse.displayedTranslation !== 'KJV') {
+    throw new Error(`validateDay: day.verse.displayedTranslation must be 'NIV' or 'KJV' (got ${JSON.stringify(day.verse.displayedTranslation)})`);
+  }
+  if (day.verse.originalLanguage !== 'Hebrew' && day.verse.originalLanguage !== 'Greek') {
+    throw new Error(`validateDay: day.verse.originalLanguage must be 'Hebrew' or 'Greek' (got ${JSON.stringify(day.verse.originalLanguage)})`);
+  }
+  if (!Array.isArray(day.verse.vocab) || day.verse.vocab.length === 0) {
+    throw new Error(`validateDay: day.verse.vocab must be a non-empty array (got ${Array.isArray(day.verse.vocab) ? 'empty array' : typeof day.verse.vocab})`);
+  }
+}
+
 function renderWordRow(w) {
   return `<tr><td>${escapeHtml(w.word)}</td><td>${escapeHtml(w.pronunciation)}</td><td>${escapeHtml(w.meaning)}</td><td>${escapeHtml(w.sentence)}</td></tr>`;
 }
@@ -17,10 +84,11 @@ function renderVocabRow(v) {
 }
 
 function renderQuizItem(q, i) {
-  return `<li data-question-index="${i}" data-answer="${escapeHtml(q.answer)}"><p>${escapeHtml(q.question)}</p><input type="text" class="quiz-input" /><button type="button" class="quiz-check">확인</button> <span class="quiz-feedback"></span></li>`;
+  return `<li data-question-index="${i}" data-item-type="${escapeHtml(q.itemType)}" data-item-id="${q.itemId}" data-answer="${escapeHtml(q.answer)}"><p>${escapeHtml(q.question)}</p><input type="text" class="quiz-input" /><button type="button" class="quiz-check">확인</button> <span class="quiz-feedback"></span></li>`;
 }
 
 function renderPage(day) {
+  validateDay(day);
   const wordsRows = day.words.map(renderWordRow).join('\n');
   const vocabRows = day.verse.vocab.map(renderVocabRow).join('\n');
   const quizItems = day.quiz.map(renderQuizItem).join('\n');
@@ -76,6 +144,8 @@ ${vocabRows}
   </table>
 </section>
 
+<footer><a href="/archive/">지난 학습 기록 보기</a></footer>
+
 <script src="/assets/client.js" data-quiz-date="${escapeHtml(day.date)}"></script>
 </body>
 </html>
@@ -88,4 +158,4 @@ if (require.main === module) {
   process.stdout.write(renderPage(day));
 }
 
-module.exports = { renderPage, escapeHtml };
+module.exports = { renderPage, escapeHtml, validateDay };

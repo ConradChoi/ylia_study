@@ -1,6 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { selectToday, EPOCH } = require('./select-today');
+const { selectToday, EPOCH, validateCounts } = require('./select-today');
 
 test('selectToday picks the first window/idiom/verse on the epoch date', () => {
   const words = Array.from({ length: 600 }, (_, i) => ({ id: i + 1, word: `w${i}` }));
@@ -31,4 +31,36 @@ test('selectToday advances the window on the next day', () => {
   assert.equal(result.idiom.idiom, 'i1');
   assert.equal(result.verse.reference, 'v1');
   assert.equal(result.translation, 'KJV');
+});
+
+test('validateCounts does not throw when all tables have the expected row counts', () => {
+  const words = Array.from({ length: 600 }, (_, i) => ({ id: i + 1 }));
+  const idioms = Array.from({ length: 100 }, (_, i) => ({ id: i + 1 }));
+  const verses = Array.from({ length: 66 }, (_, i) => ({ id: i + 1 }));
+
+  assert.doesNotThrow(() => validateCounts({ words, idioms, verses }));
+});
+
+test('validateCounts throws naming the table when words has the wrong count', () => {
+  const words = Array.from({ length: 599 }, (_, i) => ({ id: i + 1 }));
+  const idioms = Array.from({ length: 100 }, (_, i) => ({ id: i + 1 }));
+  const verses = Array.from({ length: 66 }, (_, i) => ({ id: i + 1 }));
+
+  assert.throws(() => validateCounts({ words, idioms, verses }), /words/);
+});
+
+test('validateCounts throws naming the table when idioms has the wrong count', () => {
+  const words = Array.from({ length: 600 }, (_, i) => ({ id: i + 1 }));
+  const idioms = Array.from({ length: 50 }, (_, i) => ({ id: i + 1 }));
+  const verses = Array.from({ length: 66 }, (_, i) => ({ id: i + 1 }));
+
+  assert.throws(() => validateCounts({ words, idioms, verses }), /idioms/);
+});
+
+test('validateCounts throws naming the table when verses is empty', () => {
+  const words = Array.from({ length: 600 }, (_, i) => ({ id: i + 1 }));
+  const idioms = Array.from({ length: 100 }, (_, i) => ({ id: i + 1 }));
+  const verses = [];
+
+  assert.throws(() => validateCounts({ words, idioms, verses }), /verses/);
 });

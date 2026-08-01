@@ -70,8 +70,8 @@
           },
           body: JSON.stringify([{
             quiz_date: quizDate,
-            item_type: 'word',
-            item_id: Number(li.dataset.questionIndex),
+            item_type: li.dataset.itemType,
+            item_id: Number(li.dataset.itemId),
             question,
             is_correct: isCorrect,
           }]),
@@ -84,4 +84,8 @@
     recordVisitAndShowStreak();
     wireQuiz();
   });
+
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { todayStr, recordVisitAndShowStreak, wireQuiz };
+  }
 })();
