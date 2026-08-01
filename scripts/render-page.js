@@ -30,13 +30,13 @@ function renderPage(day) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>오늘의 영어 &amp; 말씀 — ${day.date}</title>
+<title>오늘의 영어 &amp; 말씀 — ${escapeHtml(day.date)}</title>
 <link rel="stylesheet" href="/assets/styles.css">
 </head>
 <body>
 <header>
   <h1>오늘의 영어 &amp; 말씀</h1>
-  <p class="date">${day.date}</p>
+  <p class="date">${escapeHtml(day.date)}</p>
   <p id="streak-badge" class="streak">연속 출석 확인 중...</p>
 </header>
 
@@ -66,7 +66,7 @@ ${quizItems}
 <section class="verse">
   <h2>오늘의 성경구절 — ${escapeHtml(day.verse.reference)}</h2>
   <p class="krv">${escapeHtml(day.verse.krv)}</p>
-  <p class="en"><span class="translation-label">[${day.verse.displayedTranslation}]</span> ${escapeHtml(day.verse.displayedText)}</p>
+  <p class="en"><span class="translation-label">[${escapeHtml(day.verse.displayedTranslation)}]</span> ${escapeHtml(day.verse.displayedText)}</p>
   <p class="original" dir="${day.verse.originalLanguage === 'Hebrew' ? 'rtl' : 'ltr'}">${escapeHtml(day.verse.originalText)}</p>
   <table class="vocab">
     <thead><tr><th>원어</th><th>발음</th><th>뜻</th></tr></thead>
@@ -76,7 +76,7 @@ ${vocabRows}
   </table>
 </section>
 
-<script src="/assets/client.js" data-quiz-date="${day.date}"></script>
+<script src="/assets/client.js" data-quiz-date="${escapeHtml(day.date)}"></script>
 </body>
 </html>
 `;
