@@ -1,0 +1,63 @@
+:root {
+  color-scheme: light dark;
+  --bg: #fafaf9;
+  --fg: #1c1917;
+  --card: #ffffff;
+  --accent: #b45309;
+  --border: #e7e5e4;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1917;
+    --fg: #f5f5f4;
+    --card: #292524;
+    --accent: #fbbf24;
+    --border: #44403c;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 1.5rem 1rem 3rem;
+  max-width: 42rem;
+  margin-inline: auto;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  line-height: 1.6;
+}
+
+header { text-align: center; margin-bottom: 2rem; }
+header h1 { font-size: 1.4rem; margin-bottom: 0.25rem; }
+.date { color: color-mix(in srgb, var(--fg) 60%, transparent); margin: 0; }
+.streak { font-weight: 600; color: var(--accent); }
+
+section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  overflow-x: auto;
+}
+
+section h2 { margin-top: 0; font-size: 1.1rem; }
+
+table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+th, td { text-align: left; padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--border); }
+
+.quiz ol { padding-left: 1.2rem; }
+.quiz li { margin-bottom: 0.75rem; }
+.quiz-input { padding: 0.3rem 0.5rem; border: 1px solid var(--border); border-radius: 0.4rem; background: var(--bg); color: var(--fg); }
+.quiz-check { padding: 0.3rem 0.7rem; border-radius: 0.4rem; border: none; background: var(--accent); color: #1c1917; cursor: pointer; }
+.quiz-feedback { margin-left: 0.5rem; font-weight: 600; }
+
+.verse .original { font-size: 1.2rem; direction: rtl; }
+.verse .original[dir="ltr"] { direction: ltr; }
+.translation-label { font-weight: 700; color: var(--accent); }
+
+.archive-list { list-style: none; padding: 0; }
+.archive-list li { padding: 0.4rem 0; border-bottom: 1px solid var(--border); }
