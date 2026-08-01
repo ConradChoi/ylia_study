@@ -749,7 +749,7 @@ ${quizItems}
   <h2>오늘의 성경구절 — ${escapeHtml(day.verse.reference)}</h2>
   <p class="krv">${escapeHtml(day.verse.krv)}</p>
   <p class="en"><span class="translation-label">[${day.verse.displayedTranslation}]</span> ${escapeHtml(day.verse.displayedText)}</p>
-  <p class="original" dir="${day.verse.originalLanguage === 'Hebrew' ? 'rtl' : 'ltr'}">${day.verse.originalText}</p>
+  <p class="original" dir="${day.verse.originalLanguage === 'Hebrew' ? 'rtl' : 'ltr'}">${escapeHtml(day.verse.originalText)}</p>
   <table class="vocab">
     <thead><tr><th>원어</th><th>발음</th><th>뜻</th></tr></thead>
     <tbody>

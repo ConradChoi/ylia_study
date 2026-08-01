@@ -85,7 +85,11 @@ drop policy if exists "daily_log insert" on daily_log;
 create policy "daily_log insert" on daily_log for insert with check (true);
 
 drop policy if exists "daily_log update" on daily_log;
-create policy "daily_log update" on daily_log for update using (true); -- 같은 날 재실행 시 덮어쓰기 허용
+-- 오늘/어제(KST) 행만 수정 가능 (같은 날 재실행 시 덮어쓰기는 허용하되, 지난 기록을 임의로 변조하는 건 막는다)
+create policy "daily_log update" on daily_log
+  for update
+  using (log_date >= ((now() at time zone 'Asia/Seoul')::date - 1))
+  with check (log_date >= ((now() at time zone 'Asia/Seoul')::date - 1));
 
 drop policy if exists "visits read" on visits;
 create policy "visits read" on visits for select using (true);
