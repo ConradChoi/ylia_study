@@ -1,5 +1,4 @@
-function todayInKST() {
-  const now = new Date();
+function todayInKST(now = new Date()) {
   const kstMillis = now.getTime() + 9 * 60 * 60 * 1000;
   const kst = new Date(kstMillis);
   return new Date(Date.UTC(kst.getUTCFullYear(), kst.getUTCMonth(), kst.getUTCDate()));

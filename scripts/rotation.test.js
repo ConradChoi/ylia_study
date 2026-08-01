@@ -45,3 +45,10 @@ test('todayInKST normalizes to midnight UTC representing the KST calendar date',
   assert.equal(d.getUTCHours(), 0);
   assert.equal(d.getUTCMinutes(), 0);
 });
+
+test('todayInKST applies +9h offset correctly: 2026-08-01T16:00:00Z → 2026-08-02 (KST)', () => {
+  const utcInstant = new Date(Date.UTC(2026, 7, 1, 16, 0, 0));
+  const result = todayInKST(utcInstant);
+  const expected = new Date(Date.UTC(2026, 7, 2));
+  assert.equal(result.getTime(), expected.getTime());
+});
