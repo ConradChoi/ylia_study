@@ -3,7 +3,9 @@
   const SUPABASE_KEY = 'sb_publishable_Or19pdIs6WAUH-tWaxbj-Q_Ku0qkiC2';
 
   function todayStr() {
-    return new Date().toISOString().slice(0, 10);
+    const now = new Date();
+    const kst = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+    return kst.toISOString().slice(0, 10);
   }
 
   async function recordVisitAndShowStreak() {
