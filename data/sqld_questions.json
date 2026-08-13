@@ -766,5 +766,1541 @@
     ],
     "answer_index": 0,
     "explanation": "외래키는 다른 엔터티(테이블)의 주식별자(기본키)를 참조하기 위해 포함하는 속성으로, 두 엔터티 간의 관계를 관계형 데이터베이스에서 실제로 구현하는 수단이다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "SQL에서 테이블의 모든 컬럼을 조회할 때 사용하는 기호는 무엇인가?",
+    "choices": [
+      "SELECT FULL FROM 테이블명;",
+      "SELECT ANY FROM 테이블명;",
+      "SELECT ALL FROM 테이블명;",
+      "SELECT * FROM 테이블명;"
+    ],
+    "answer_index": 3,
+    "explanation": "테이블의 모든 컬럼을 조회하려면 SELECT 절에 애스터리스크(*)를 사용한다. ALL, FULL, ANY는 각각 다른 용도로 쓰이는 키워드로 전체 컬럼 조회 기호가 아니다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "SELECT 문에서 중복된 행을 제거하고 유일한 값만 조회하기 위해 사용하는 키워드는?",
+    "choices": [
+      "SINGLE",
+      "NODUP",
+      "DISTINCT",
+      "UNIQUE ONLY"
+    ],
+    "answer_index": 2,
+    "explanation": "DISTINCT 키워드는 SELECT 절에서 중복된 행을 제거하고 유일한 결과만 반환한다. UNIQUE ONLY, SINGLE, NODUP은 SQL 표준 키워드가 아니다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 컬럼에 별칭(Alias)을 부여하는 문법으로 올바르지 않은 것은?",
+    "choices": [
+      "SELECT EMP_NAME \"이름\" FROM EMPLOYEE;",
+      "SELECT EMP_NAME # 이름 FROM EMPLOYEE;",
+      "SELECT EMP_NAME 이름 FROM EMPLOYEE;",
+      "SELECT EMP_NAME AS 이름 FROM EMPLOYEE;"
+    ],
+    "answer_index": 1,
+    "explanation": "컬럼 별칭은 AS 키워드를 사용하거나 AS를 생략하고 공백으로 구분하여 부여할 수 있으며, 별칭에 공백이나 특수문자가 포함될 경우 큰따옴표로 감쌀 수 있다. '#' 기호는 별칭 지정 문법에 사용되지 않는다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "SELECT 절에서 문자열을 다른 문자열이나 컬럼 값과 연결(concatenation)할 때 표준 SQL에서 사용하는 연산자는?",
+    "choices": [
+      "++",
+      "||",
+      "&&",
+      "::"
+    ],
+    "answer_index": 1,
+    "explanation": "표준 SQL에서 문자열 연결 연산자는 이중 파이프(||)이다. 일부 DBMS(예: SQL Server)는 +를 사용하기도 하지만 ANSI 표준 연산자는 ||이다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "NULL 값에 대한 설명으로 가장 옳은 것은?",
+    "choices": [
+      "숫자 0과 동일한 값으로 산술 연산에서 0으로 취급된다.",
+      "빈 문자열('')과 완전히 동일한 의미를 가진다.",
+      "값이 존재하지 않거나 알 수 없음을 나타내는 특수한 상태이며, 0이나 공백 문자열과는 다르다.",
+      "모든 DBMS에서 항상 가장 작은 값으로 정렬된다."
+    ],
+    "answer_index": 2,
+    "explanation": "NULL은 '값이 없음' 또는 '알 수 없음'을 나타내는 특수한 상태로, 0이나 빈 문자열과 다르며 NULL이 포함된 산술 연산의 결과는 NULL이 된다. 정렬 시 NULL의 처리 순서는 DBMS마다 다르게 정의된다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 SQL 문의 실행 순서를 논리적으로 나열할 때, SELECT 절이 실제로 처리되는 시점으로 옳은 것은?",
+    "choices": [
+      "FROM, WHERE, GROUP BY, HAVING 처리 이후, ORDER BY 처리 이전",
+      "ORDER BY 절 처리 이후에 마지막으로 처리된다.",
+      "FROM 절보다 먼저 처리된다.",
+      "WHERE 절보다 먼저 처리된다."
+    ],
+    "answer_index": 0,
+    "explanation": "SQL의 논리적 처리 순서는 FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY 순이다. SELECT 절은 집계와 필터링이 끝난 뒤, 정렬 이전에 처리된다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "숫자 컬럼 SALARY에 대해 10% 인상된 값을 조회하고자 할 때 올바른 SELECT 절은?",
+    "choices": [
+      "SELECT SALARY UP 10 FROM EMPLOYEE;",
+      "SELECT SALARY % 1.1 FROM EMPLOYEE;",
+      "SELECT SALARY * 1.1 FROM EMPLOYEE;",
+      "SELECT SALARY # 10 FROM EMPLOYEE;"
+    ],
+    "answer_index": 2,
+    "explanation": "SALARY 값을 10% 인상하려면 원래 값에 1.1을 곱하면 된다. %, #, UP은 산술 연산자로 사용되지 않는다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "SQL 주석(comment) 처리 방법으로 옳지 않은 것은?",
+    "choices": [
+      "-- 한 줄 주석",
+      "%% 주석 내용 %%",
+      "/* 여러 줄에 걸친 주석 */",
+      "/* 한 줄 주석 */"
+    ],
+    "answer_index": 1,
+    "explanation": "표준 SQL에서 한 줄 주석은 '--', 여러 줄 주석은 '/* ... */'로 표현한다. '%% ... %%' 형태는 SQL 주석 문법이 아니다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "테이블 없이 상수 값만 조회하는 SQL 문의 예로 가장 적절한 것은? (Oracle 기준 DUAL 테이블 사용)",
+    "choices": [
+      "PRINT 1+1;",
+      "SELECT 1+1 FROM DUAL;",
+      "VALUES(1+1);",
+      "SELECT 1+1;"
+    ],
+    "answer_index": 1,
+    "explanation": "Oracle에서는 FROM 절이 필수이므로 테이블 없이 상수만 조회할 때 더미 테이블인 DUAL을 사용한다. 'SELECT 1+1;'처럼 FROM 절을 생략하면 Oracle 문법 오류가 발생한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 SELECT 문의 기본 구조에서 반드시 포함되어야 하는 절은?",
+    "choices": [
+      "SELECT, FROM",
+      "SELECT, WHERE",
+      "SELECT, ORDER BY",
+      "SELECT, GROUP BY"
+    ],
+    "answer_index": 0,
+    "explanation": "SELECT 문에서 조회할 컬럼을 지정하는 SELECT 절과 대상 테이블을 지정하는 FROM 절은 기본적으로 필수 구성 요소이다(단, DUAL 같은 더미 테이블을 쓰는 특수한 경우 제외). WHERE, ORDER BY, GROUP BY는 선택 사항이다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 컬럼 값을 조건에 따라 다른 값으로 치환하여 조회할 때 사용할 수 있는 함수로 가장 적절한 것은?",
+    "choices": [
+      "CASE WHEN 표현식",
+      "CONVERT WHEN 표현식",
+      "SWITCH WHEN 표현식",
+      "IF THEN GOTO 표현식"
+    ],
+    "answer_index": 0,
+    "explanation": "CASE WHEN 구문은 조건에 따라 값을 다르게 반환하는 표준 SQL 표현식이다. CONVERT WHEN, SWITCH WHEN, IF THEN GOTO는 표준 SQL 문법이 아니다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "NULL 값을 다른 값으로 대체하여 조회하고 싶을 때 사용하는 함수로 옳지 않은 것은? (여러 DBMS 공통 함수 포함)",
+    "choices": [
+      "COALESCE(컬럼, 값)",
+      "NVL(컬럼, 값)",
+      "REPLACE(컬럼, NULL, 값)",
+      "ISNULL(컬럼, 값)"
+    ],
+    "answer_index": 2,
+    "explanation": "NVL(Oracle), COALESCE(표준 SQL), ISNULL(SQL Server)은 모두 NULL 값을 대체하는 함수이다. REPLACE는 문자열 내 특정 부분 문자열을 치환하는 함수로 NULL 대체 용도가 아니다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "SELECT 절에 작성한 표현식의 결과에 별칭을 지정하지 않았을 때 일반적으로 나타나는 컬럼 헤더로 옳은 것은?",
+    "choices": [
+      "오류가 발생하여 조회할 수 없다.",
+      "항상 'COLUMN1'로 표시된다.",
+      "항상 NULL로 표시된다.",
+      "작성한 표현식 그 자체가 컬럼명으로 표시된다."
+    ],
+    "answer_index": 3,
+    "explanation": "별칭을 지정하지 않으면 대부분의 DBMS는 SELECT 절에 작성된 표현식(함수식, 연산식 등) 자체를 컬럼 헤더로 표시한다. 이는 가독성이 떨어지므로 보통 별칭을 부여하는 것이 권장된다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 오늘 날짜(현재 날짜)를 조회하는 표준적인 함수로 가장 널리 쓰이는 것은?",
+    "choices": [
+      "NOW_DATE",
+      "TODAY()",
+      "GET_DATE_TODAY()",
+      "CURRENT_DATE"
+    ],
+    "answer_index": 3,
+    "explanation": "표준 SQL에서 현재 날짜를 반환하는 함수는 CURRENT_DATE이며, DBMS에 따라 SYSDATE(Oracle), GETDATE()(SQL Server) 등의 변형이 존재한다. TODAY(), NOW_DATE, GET_DATE_TODAY()는 표준 함수명이 아니다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "문자열의 길이를 반환하는 표준 SQL 함수는?",
+    "choices": [
+      "SIZE(문자열)",
+      "WIDTH(문자열)",
+      "LENGTH(문자열)",
+      "COUNT(문자열)"
+    ],
+    "answer_index": 2,
+    "explanation": "LENGTH 함수는 문자열의 길이(문자 수 또는 바이트 수)를 반환한다. COUNT는 행의 개수를 세는 집계 함수이며 SIZE, WIDTH는 문자열 길이를 구하는 표준 함수가 아니다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "숫자를 지정한 소수점 자리에서 반올림하는 함수로 옳은 것은?",
+    "choices": [
+      "FIX(숫자, 자릿수)",
+      "ROUNDUP(숫자, 자릿수)",
+      "ROUND(숫자, 자릿수)",
+      "TRUNC_ROUND(숫자, 자릿수)"
+    ],
+    "answer_index": 2,
+    "explanation": "ROUND 함수는 지정한 자릿수에서 반올림한 값을 반환하는 표준적인 숫자 함수이다. TRUNC는 버림, FIX나 ROUNDUP은 이 문맥의 표준 함수명이 아니다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "SELECT 문에서 여러 컬럼을 나열할 때 컬럼 사이를 구분하는 기호로 옳은 것은?",
+    "choices": [
+      "파이프(|)",
+      "세미콜론(;)",
+      "쉼표(,)",
+      "콜론(:)"
+    ],
+    "answer_index": 2,
+    "explanation": "SELECT 절에서 여러 컬럼을 나열할 때는 쉼표(,)로 구분한다. 세미콜론은 문장의 종료를 나타내고, 콜론과 단일 파이프는 컬럼 구분자로 사용되지 않는다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "테이블 별칭(alias)을 지정하는 목적으로 가장 거리가 먼 것은?",
+    "choices": [
+      "테이블의 실제 데이터 값을 자동으로 암호화하기 위해",
+      "SQL 문을 간결하게 작성하기 위해",
+      "동일한 테이블을 셀프 조인할 때 서로 구분하기 위해",
+      "여러 테이블을 조인할 때 컬럼의 소속 테이블을 명확히 구분하기 위해"
+    ],
+    "answer_index": 0,
+    "explanation": "테이블 별칭은 SQL을 간결하게 작성하고, 조인 시 컬럼의 소속을 명확히 하며, 셀프 조인에서 동일 테이블을 구분하기 위해 사용한다. 데이터 암호화와는 관련이 없다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "SELECT 문의 결과로 반환되는 것은 무엇인가?",
+    "choices": [
+      "항상 정확히 하나의 행",
+      "0개 이상의 행으로 구성된 결과 집합(Result Set)",
+      "테이블 자체의 구조 정의",
+      "하나의 스칼라 값만 반환"
+    ],
+    "answer_index": 1,
+    "explanation": "SELECT 문은 조건에 맞는 0개 이상의 행으로 구성된 결과 집합을 반환한다. 조건에 맞는 행이 없으면 빈 결과 집합이, 여러 행이 맞으면 여러 행이 반환될 수 있다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 SELECT 절에서 산술 연산자의 우선순위가 가장 높은 것은?",
+    "choices": [
+      "괄호가 없을 때 왼쪽에서 오른쪽 순서로만 결정되며 우선순위 차이는 없다.",
+      "곱셈(*), 나눗셈(/)",
+      "뺄셈(-)",
+      "덧셈(+)"
+    ],
+    "answer_index": 1,
+    "explanation": "일반적인 산술 연산자 우선순위는 곱셈과 나눗셈이 덧셈, 뺄셈보다 높다. 동일 우선순위 연산자는 보통 왼쪽에서 오른쪽으로 계산되지만, 곱셈/나눗셈과 덧셈/뺄셈 사이에는 명확한 우선순위 차이가 존재한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "WHERE 절에서 급여가 3000 이상 5000 이하인 사원을 조회하는 조건으로 가장 적절한 것은?",
+    "choices": [
+      "WHERE SALARY RANGE(3000, 5000)",
+      "WHERE SALARY BETWEEN 3000 AND 5000",
+      "WHERE SALARY IN 3000 TO 5000",
+      "WHERE SALARY = 3000 TO 5000"
+    ],
+    "answer_index": 1,
+    "explanation": "BETWEEN A AND B는 A 이상 B 이하(양쪽 경계값 포함)의 범위를 의미하는 표준 SQL 문법이다. 나머지는 올바른 SQL 문법이 아니다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "WHERE 절에서 DEPT_ID 값이 10, 20, 30 중 하나인 행을 조회하는 조건으로 가장 간결하고 올바른 것은?",
+    "choices": [
+      "WHERE DEPT_ID ANY (10, 20, 30)",
+      "WHERE DEPT_ID BETWEEN 10 AND 30",
+      "WHERE DEPT_ID IN (10, 20, 30)",
+      "WHERE DEPT_ID = 10 OR 20 OR 30"
+    ],
+    "answer_index": 2,
+    "explanation": "IN 연산자는 여러 값 중 하나와 일치하는지 확인할 때 사용하는 가장 간결한 방법이다. 'WHERE DEPT_ID = 10 OR 20 OR 30'은 문법 오류이며, BETWEEN은 10과 30 사이의 모든 값(20 포함하되 다른 중간값도 포함)을 의미하므로 의도와 다르다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "WHERE 절에서 이름이 '김'으로 시작하는 사원을 조회하는 조건으로 옳은 것은?",
+    "choices": [
+      "WHERE EMP_NAME LIKE '%김'",
+      "WHERE EMP_NAME = '김*'",
+      "WHERE EMP_NAME START '김'",
+      "WHERE EMP_NAME LIKE '김%'"
+    ],
+    "answer_index": 3,
+    "explanation": "LIKE 연산자와 와일드카드 %를 사용하여 '김%'와 같이 작성하면 '김'으로 시작하는 모든 문자열을 조회할 수 있다. '%김'은 '김'으로 끝나는 문자열을 의미하므로 다르다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "WHERE 절에서 컬럼 값이 NULL인 행을 조회할 때 올바른 조건식은?",
+    "choices": [
+      "WHERE 컬럼명 <> NULL",
+      "WHERE 컬럼명 = NULL",
+      "WHERE 컬럼명 == NULL",
+      "WHERE 컬럼명 IS NULL"
+    ],
+    "answer_index": 3,
+    "explanation": "NULL은 값이 아니라 상태이므로 등호(=)로 비교할 수 없고 반드시 IS NULL(또는 IS NOT NULL) 구문을 사용해야 한다. '컬럼명 = NULL'은 항상 알 수 없음(UNKNOWN)으로 평가되어 결과에 포함되지 않는다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "WHERE 절의 조건 'SALARY > 3000 AND DEPT_ID = 10 OR DEPT_ID = 20'에 대한 설명으로 옳은 것은?",
+    "choices": [
+      "OR가 AND보다 우선순위가 높아 SALARY > 3000 AND (DEPT_ID = 10 OR DEPT_ID = 20) 으로 해석된다.",
+      "왼쪽부터 순서대로만 연산되어 괄호와 무관하게 항상 동일한 결과를 낸다.",
+      "AND와 OR는 동일한 우선순위를 가져 문법 오류가 발생한다.",
+      "AND가 OR보다 우선순위가 높아 (SALARY > 3000 AND DEPT_ID = 10) OR DEPT_ID = 20 으로 해석된다."
+    ],
+    "answer_index": 3,
+    "explanation": "SQL에서 논리 연산자의 우선순위는 AND가 OR보다 높다. 따라서 괄호가 없으면 AND 조건이 먼저 결합되고 그 결과와 나머지가 OR로 연결된다. 의도한 조건이 다르다면 괄호로 명시적으로 묶어야 한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "WHERE 절에서 조건을 부정할 때 사용하는 논리 연산자는?",
+    "choices": [
+      "NOT",
+      "EXCLUDE",
+      "REVERSE",
+      "DENY"
+    ],
+    "answer_index": 0,
+    "explanation": "NOT 연산자는 뒤따르는 조건의 논리값을 반대로 만든다. EXCLUDE, REVERSE, DENY는 SQL 표준 논리 연산자가 아니다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 문자열 비교 시 대소문자를 구분하지 않고 '％' 문자를 포함하는 값을 LIKE로 찾고자 할 때 사용하는 구문으로 옳은 것은?",
+    "choices": [
+      "WHERE 컬럼 LIKE '%\\%%' ESCAPE '\\'",
+      "WHERE 컬럼 LIKE '%%%%'",
+      "WHERE 컬럼 CONTAINS '%'",
+      "WHERE 컬럼 = '%'"
+    ],
+    "answer_index": 0,
+    "explanation": "LIKE 패턴에서 %는 와일드카드로 예약되어 있으므로, 실제 % 문자 자체를 검색하려면 ESCAPE 옵션으로 이스케이프 문자를 지정하고 그 문자를 % 앞에 붙여야 한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "WHERE 절에서 DEPT_ID가 10이 아닌 사원을 조회하는 조건으로 옳지 않은 것은?",
+    "choices": [
+      "WHERE DEPT_ID => 10",
+      "WHERE DEPT_ID <> 10",
+      "WHERE NOT DEPT_ID = 10",
+      "WHERE DEPT_ID != 10"
+    ],
+    "answer_index": 0,
+    "explanation": "'=>'는 SQL 비교 연산자로 존재하지 않는 잘못된 표기이다(이상을 의미하려면 '>=' 사용). <>, !=, NOT ... = 10은 모두 '같지 않음'을 표현하는 유효한 방법이다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "WHERE 절과 HAVING 절의 차이에 대한 설명으로 가장 옳은 것은?",
+    "choices": [
+      "HAVING은 그룹화 이전의 개별 행만 필터링할 수 있다.",
+      "WHERE는 그룹화 이전의 개별 행을 필터링하고, HAVING은 그룹화된 결과(그룹)를 필터링한다.",
+      "WHERE와 HAVING은 완전히 동일하며 서로 대체 가능하다.",
+      "WHERE 절에서는 집계 함수를 반드시 사용해야 한다."
+    ],
+    "answer_index": 1,
+    "explanation": "WHERE 절은 GROUP BY로 그룹화되기 전 개별 행 단위로 조건을 적용하고, HAVING 절은 GROUP BY로 만들어진 그룹 단위 결과에 조건을 적용한다는 점이 핵심적인 차이다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 WHERE 절에 집계 함수(예: SUM, COUNT)를 직접 사용할 수 없는 이유로 가장 적절한 것은?",
+    "choices": [
+      "WHERE 절은 그룹화가 일어나기 전 단계에서 처리되므로 그룹 단위 집계 결과가 아직 존재하지 않기 때문이다.",
+      "집계 함수는 ORDER BY 절 전용 함수이기 때문이다.",
+      "집계 함수는 SELECT 절에서만 정의할 수 있는 예약어이기 때문이다.",
+      "WHERE 절은 숫자형 데이터만 처리할 수 있기 때문이다."
+    ],
+    "answer_index": 0,
+    "explanation": "SQL의 논리적 처리 순서상 WHERE는 GROUP BY보다 먼저 실행되므로, 아직 그룹별 집계 결과가 계산되지 않은 시점이다. 따라서 집계 함수 조건은 HAVING 절에서 사용해야 한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "WHERE 절에서 여러 조건 중 하나라도 참이면 행을 반환하고자 할 때 사용하는 연산자는?",
+    "choices": [
+      "OR",
+      "XOR",
+      "AND",
+      "NAND"
+    ],
+    "answer_index": 0,
+    "explanation": "OR 연산자는 나열된 여러 조건 중 하나라도 참이면 전체 조건을 참으로 평가한다. AND는 모든 조건이 참이어야 하며, XOR과 NAND는 표준 SQL의 논리 연산자가 아니다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 부정 조건 'NOT IN' 사용 시 주의할 점으로 가장 적절한 것은?",
+    "choices": [
+      "NOT IN은 반드시 서브쿼리와 함께만 사용할 수 있다.",
+      "비교 대상 목록(서브쿼리 포함)에 NULL이 포함되면 예상과 다르게 결과가 전혀 반환되지 않을 수 있다.",
+      "NOT IN은 숫자 타입에서는 사용할 수 없다.",
+      "NOT IN은 항상 IN과 완전히 동일한 결과를 반환한다."
+    ],
+    "answer_index": 1,
+    "explanation": "NOT IN의 비교 대상 리스트(특히 서브쿼리 결과)에 NULL 값이 하나라도 포함되면, NULL과의 비교가 UNKNOWN이 되어 전체 조건이 참이 될 수 없게 되므로 예상과 달리 결과가 비어버리는 경우가 흔하다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "WHERE 절에서 HIRE_DATE가 '2023-01-01'과 '2023-12-31' 사이인 사원을 조회하는 조건 중 가장 표준적인 것은?",
+    "choices": [
+      "WHERE HIRE_DATE = '2023-01-01' - '2023-12-31'",
+      "WHERE HIRE_DATE WITHIN '2023-01-01', '2023-12-31'",
+      "WHERE HIRE_DATE BETWEEN '2023-01-01' AND '2023-12-31'",
+      "WHERE HIRE_DATE ~ '2023-01-01' TO '2023-12-31'"
+    ],
+    "answer_index": 2,
+    "explanation": "날짜 범위 조회도 숫자와 마찬가지로 BETWEEN A AND B 구문을 사용할 수 있으며, 이는 A 이상 B 이하의 범위를 의미하는 표준 문법이다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 조건 'DEPT_ID IS NOT NULL'에 대한 설명으로 옳은 것은?",
+    "choices": [
+      "DEPT_ID 값에 관계없이 모든 행을 조회한다.",
+      "DEPT_ID 컬럼 값이 0이 아닌 행만 조회한다.",
+      "DEPT_ID 컬럼 값이 NULL이 아닌 행만 조회한다.",
+      "DEPT_ID 컬럼이 존재하지 않는 테이블을 조회한다."
+    ],
+    "answer_index": 2,
+    "explanation": "IS NOT NULL은 해당 컬럼 값이 NULL이 아닌 행만 필터링하는 조건이다. 0과 NULL은 서로 다른 개념이므로 혼동해서는 안 된다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "WHERE 절에서 여러 개의 AND 조건과 OR 조건을 섞어 쓸 때, 의도한 순서로 평가되도록 보장하는 가장 안전한 방법은?",
+    "choices": [
+      "괄호를 사용하여 원하는 연산 그룹을 명시적으로 지정한다.",
+      "조건을 모두 OR로만 작성한다.",
+      "AND와 OR를 함께 사용하지 않고 UNION으로 대체한다.",
+      "조건의 순서를 무작위로 배치한다."
+    ],
+    "answer_index": 0,
+    "explanation": "연산자 우선순위에 대한 착오를 방지하고 의도한 논리를 명확히 하려면 괄호를 사용해 그룹을 명시하는 것이 가장 안전하고 권장되는 방법이다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 LIKE 패턴에서 임의의 문자 한 개를 의미하는 와일드카드 기호는? (표준 SQL 기준)",
+    "choices": [
+      "?",
+      "*",
+      "_",
+      "%"
+    ],
+    "answer_index": 2,
+    "explanation": "표준 SQL의 LIKE 패턴에서 밑줄(_)은 정확히 한 개의 임의 문자를, %는 0개 이상의 임의 문자를 의미한다. ?, *는 일부 다른 도구(정규식, 파일시스템)에서 쓰이는 기호로 표준 SQL LIKE 문법이 아니다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 SQL 'WHERE SALARY >= 3000 AND SALARY <= 5000'과 동일한 의미를 가지는 조건은?",
+    "choices": [
+      "WHERE SALARY IN (3000, 5000)",
+      "WHERE SALARY BETWEEN 5000 AND 3000",
+      "WHERE SALARY BETWEEN 3000 AND 5000",
+      "WHERE SALARY NOT BETWEEN 3000 AND 5000"
+    ],
+    "answer_index": 2,
+    "explanation": "BETWEEN 3000 AND 5000은 3000 이상 5000 이하를 의미하므로 'SALARY >= 3000 AND SALARY <= 5000'과 동일하다. BETWEEN은 반드시 작은 값을 먼저, 큰 값을 나중에 써야 하며 순서가 바뀌면 결과가 항상 비게 된다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 다중 조건 결합 시 OR 조건들을 IN으로 바꾸어 쓸 수 있는 경우로 가장 적절한 것은?",
+    "choices": [
+      "부등호 비교(>, <)를 OR로 나열한 경우",
+      "동일한 컬럼에 대해 여러 값과의 동등 비교를 OR로 나열한 경우",
+      "서로 다른 컬럼에 대한 조건을 OR로 나열한 경우",
+      "IS NULL 조건을 OR로 나열한 경우"
+    ],
+    "answer_index": 1,
+    "explanation": "IN 연산자는 '컬럼 = 값1 OR 컬럼 = 값2 OR ...'처럼 동일한 컬럼에 대한 동등 비교의 OR 나열을 간결하게 표현할 때 사용한다. 서로 다른 컬럼이나 부등호 비교에는 적용할 수 없다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "WHERE 절 조건에서 문자열 값을 표현할 때 표준 SQL에서 사용하는 인용 부호는?",
+    "choices": [
+      "큰따옴표(\")",
+      "작은따옴표(')",
+      "역따옴표(`)",
+      "대괄호([])"
+    ],
+    "answer_index": 1,
+    "explanation": "표준 SQL에서 문자열 리터럴은 작은따옴표로 감싸서 표현한다. 큰따옴표는 주로 식별자(컬럼명, 테이블명)를 감싸는 데 사용되며 DBMS별로 처리 방식이 다를 수 있다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 조건 'GRADE != 'VIP'' 실행 시 GRADE 값이 NULL인 행이 결과에 포함되지 않는 이유로 가장 옳은 것은?",
+    "choices": [
+      "NULL은 항상 문자열 'VIP'와 같다고 취급되기 때문이다.",
+      "DBMS가 NULL 값을 자동으로 'VIP'로 치환하기 때문이다.",
+      "NULL과의 비교 연산 결과는 참(TRUE)도 거짓(FALSE)도 아닌 알 수 없음(UNKNOWN)으로 평가되어 WHERE 조건을 통과하지 못하기 때문이다.",
+      "!= 연산자는 NULL이 포함된 컬럼에 사용할 수 없어 SQL 오류가 발생하기 때문이다."
+    ],
+    "answer_index": 2,
+    "explanation": "NULL은 비교 연산의 대상이 되면 결과가 UNKNOWN이 되고, WHERE 절은 조건이 TRUE인 행만 반환하므로 UNKNOWN으로 평가된 행은 결과에서 제외된다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "부서별 평균 급여를 조회하고자 할 때 사용해야 하는 절은?",
+    "choices": [
+      "DISTINCT DEPT_ID와 함께 AVG(SALARY)를 SELECT",
+      "WHERE DEPT_ID와 함께 AVG(SALARY)를 SELECT",
+      "GROUP BY DEPT_ID와 함께 AVG(SALARY)를 SELECT",
+      "ORDER BY DEPT_ID와 함께 AVG(SALARY)를 SELECT"
+    ],
+    "answer_index": 2,
+    "explanation": "특정 컬럼(DEPT_ID) 기준으로 그룹을 나누어 그룹별 집계 함수(AVG) 결과를 구하려면 GROUP BY 절을 사용해야 한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "GROUP BY 절 사용 시 SELECT 절에 나열할 수 있는 컬럼에 대한 설명으로 가장 옳은 것은?",
+    "choices": [
+      "GROUP BY를 사용하면 SELECT 절에서 집계 함수를 사용할 수 없다.",
+      "GROUP BY에 명시된 컬럼과 집계 함수의 결과만 SELECT 절에 사용하는 것이 원칙이다.",
+      "SELECT 절에는 어떤 컬럼이든 제한 없이 자유롭게 나열할 수 있다.",
+      "GROUP BY 절에는 반드시 하나의 컬럼만 지정할 수 있다."
+    ],
+    "answer_index": 1,
+    "explanation": "GROUP BY를 사용하면 SELECT 절에는 GROUP BY에 명시된 컬럼(그룹화 기준)과 집계 함수의 결과만 사용하는 것이 원칙이다. 그룹화 기준에 없는 개별 컬럼을 그대로 SELECT하면 값이 모호해지므로 오류가 발생하거나 비표준적으로 처리된다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "부서별 사원 수가 5명을 초과하는 부서만 조회하고자 할 때 사용해야 할 절은?",
+    "choices": [
+      "GROUP BY COUNT(*) > 5",
+      "ORDER BY COUNT(*) > 5",
+      "WHERE COUNT(*) > 5",
+      "HAVING COUNT(*) > 5"
+    ],
+    "answer_index": 3,
+    "explanation": "그룹별 집계 결과(COUNT(*))에 대한 조건은 HAVING 절에서 지정해야 한다. WHERE 절에는 집계 함수를 직접 사용할 수 없다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 집계 함수가 아닌 것은?",
+    "choices": [
+      "SUBSTR",
+      "AVG",
+      "SUM",
+      "COUNT"
+    ],
+    "answer_index": 0,
+    "explanation": "COUNT, SUM, AVG는 여러 행의 값을 집계하여 하나의 결과로 만드는 집계 함수이다. SUBSTR은 문자열의 일부를 추출하는 단일행(스칼라) 함수로 집계 함수가 아니다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "COUNT(*)와 COUNT(컬럼명)의 차이에 대한 설명으로 가장 옳은 것은?",
+    "choices": [
+      "COUNT(*)와 COUNT(컬럼명)은 항상 동일한 결과를 반환한다.",
+      "COUNT(*)는 NULL을 포함한 전체 행의 개수를 세지만, COUNT(컬럼명)은 해당 컬럼 값이 NULL이 아닌 행만 센다.",
+      "COUNT(컬럼명)은 NULL을 포함하여 세고, COUNT(*)는 NULL을 제외하고 센다.",
+      "COUNT(*)는 오류를 발생시키므로 사용할 수 없다."
+    ],
+    "answer_index": 1,
+    "explanation": "COUNT(*)는 조건을 만족하는 모든 행의 개수를 NULL 여부와 상관없이 세지만, COUNT(특정 컬럼)은 해당 컬럼 값이 NULL이 아닌 행만 카운트한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 GROUP BY 절 없이 SELECT 절에서 SUM, MAX 등의 집계 함수만 단독으로 사용할 경우의 결과로 옳은 것은?",
+    "choices": [
+      "테이블 전체를 하나의 그룹으로 간주하여 단일 행의 집계 결과를 반환한다.",
+      "각 행마다 개별적인 집계 결과가 반환된다.",
+      "SQL 오류가 발생하여 실행되지 않는다.",
+      "항상 NULL만 반환된다."
+    ],
+    "answer_index": 0,
+    "explanation": "GROUP BY 없이 집계 함수만 사용하면 테이블 전체(또는 WHERE로 필터링된 결과)를 하나의 그룹으로 취급하여 단일 행으로 집계 결과를 반환한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "부서별, 직급별로 평균 급여를 조회하고자 할 때 GROUP BY 절의 올바른 형태는?",
+    "choices": [
+      "GROUP BY DEPT_ID, JOB",
+      "GROUP BY DEPT_ID OR JOB",
+      "GROUP BY (DEPT_ID = JOB)",
+      "GROUP BY DEPT_ID AND JOB"
+    ],
+    "answer_index": 0,
+    "explanation": "두 개 이상의 컬럼을 기준으로 그룹화하려면 GROUP BY 절에 컬럼들을 쉼표로 구분하여 나열한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "HAVING 절에서 사용할 수 없는 것으로 가장 적절한 것은?",
+    "choices": [
+      "GROUP BY로 그룹화되지 않은, 집계되지 않은 개별 행 수준의 원본 컬럼값 조건",
+      "GROUP BY에 사용된 그룹화 기준 컬럼에 대한 조건",
+      "COUNT(*)와 같은 집계 함수 결과에 대한 조건",
+      "SUM, AVG 등 집계 함수의 결과값 비교 조건"
+    ],
+    "answer_index": 0,
+    "explanation": "HAVING 절은 그룹화된 결과에 대해 조건을 적용하는 절이므로, 그룹화되지 않은 개별 행 수준의 조건(그룹 기준에 포함되지 않은 원본 컬럼)을 사용하는 것은 적절하지 않으며 이런 조건은 WHERE 절에서 처리해야 한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "부서별 최고 급여와 최저 급여의 차이를 조회하고자 할 때 사용할 함수 조합으로 옳은 것은?",
+    "choices": [
+      "MAX(SALARY) - MIN(SALARY)",
+      "MAX(SALARY) + MIN(SALARY)",
+      "SUM(SALARY) - COUNT(SALARY)",
+      "AVG(SALARY) - COUNT(SALARY)"
+    ],
+    "answer_index": 0,
+    "explanation": "그룹 내 최고값과 최저값의 차이를 구하려면 MAX 함수와 MIN 함수의 결과를 빼면 된다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 SQL 'SELECT DEPT_ID, COUNT(*) FROM EMPLOYEE GROUP BY DEPT_ID HAVING COUNT(*) >= 3 ORDER BY COUNT(*) DESC;'의 실행 순서로 옳은 것은?",
+    "choices": [
+      "SELECT → FROM → GROUP BY → HAVING → ORDER BY",
+      "FROM → GROUP BY → HAVING → SELECT → ORDER BY",
+      "FROM → HAVING → GROUP BY → SELECT → ORDER BY",
+      "ORDER BY → FROM → GROUP BY → HAVING → SELECT"
+    ],
+    "answer_index": 1,
+    "explanation": "SQL의 논리적 처리 순서는 FROM(대상 테이블 결정) → WHERE(생략됨) → GROUP BY(그룹화) → HAVING(그룹 조건) → SELECT(컬럼 선택) → ORDER BY(정렬) 순서로 진행된다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 GROUP BY와 함께 사용할 때 NULL 값을 가진 행의 처리 방식으로 옳은 것은?",
+    "choices": [
+      "NULL 값을 가진 행은 오류를 발생시켜 쿼리 실행이 중단된다.",
+      "NULL 값은 항상 다른 그룹들과 임의로 병합되어 집계된다.",
+      "NULL 값을 가진 행은 자동으로 결과에서 제외된다.",
+      "NULL 값도 하나의 그룹으로 취급되어 별도로 집계된다."
+    ],
+    "answer_index": 3,
+    "explanation": "GROUP BY 기준 컬럼 값이 NULL인 행들은 제외되지 않고 NULL이라는 하나의 그룹으로 묶여 별도로 집계된다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "부서별 사원 수를 조회하되 사원이 3명 이상이면서 부서명이 '영업'을 포함하는 부서만 조회하려 한다. 이때 부서명 조건을 적용해야 할 절로 가장 적절한 것은?",
+    "choices": [
+      "HAVING 절에서만 처리해야 한다.",
+      "WHERE 절 (그룹화 이전에 부서명 조건으로 행을 먼저 필터링)",
+      "GROUP BY 절 안에 직접 조건을 기술해야 한다.",
+      "SELECT 절에서만 처리해야 한다."
+    ],
+    "answer_index": 1,
+    "explanation": "부서명이라는 개별 행 수준의 조건은 그룹화 이전에 적용 가능한 WHERE 절에서 필터링하는 것이 효율적이며, 사원 수(집계 결과) 조건은 HAVING 절에서 처리한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 SUM 함수에 대한 설명으로 옳은 것은?",
+    "choices": [
+      "지정한 컬럼 값의 개수를 세는 함수이다.",
+      "지정한 컬럼(주로 숫자형) 값들의 합계를 구하는 집계 함수이다.",
+      "지정한 컬럼 값의 평균을 반환하는 함수이다.",
+      "지정한 컬럼 값 중 가장 큰 값을 반환하는 함수이다."
+    ],
+    "answer_index": 1,
+    "explanation": "SUM은 숫자형 컬럼 값들의 총합을 구하는 집계 함수이다. 개수는 COUNT, 최대값은 MAX, 평균은 AVG가 담당한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "GROUP BY 절에서 여러 컬럼을 조합한 소계와 총계를 함께 구하고자 할 때 사용할 수 있는 표준 SQL 확장 기능은?",
+    "choices": [
+      "STACK",
+      "MERGE",
+      "ROLLUP",
+      "PIVOT ONLY"
+    ],
+    "answer_index": 2,
+    "explanation": "ROLLUP은 GROUP BY와 함께 사용되어 그룹별 소계와 전체 총계를 계층적으로 함께 산출할 수 있는 확장 기능이다. MERGE, PIVOT ONLY, STACK은 이 기능을 지칭하는 표준 용어가 아니다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 SQL 'SELECT DEPT_ID, AVG(SALARY) FROM EMPLOYEE WHERE SALARY > 2000 GROUP BY DEPT_ID;'에 대한 설명으로 옳은 것은?",
+    "choices": [
+      "WHERE 절과 GROUP BY를 함께 사용할 수 없으므로 오류가 발생한다.",
+      "급여가 2000을 초과하는 사원만 대상으로 부서별 평균 급여를 계산한다.",
+      "부서별 평균 급여가 2000을 초과하는지 여부와 관계없이 모든 부서를 반환한다.",
+      "모든 사원을 대상으로 부서별 평균 급여를 계산한 뒤, 평균이 2000을 초과하는 부서만 남긴다."
+    ],
+    "answer_index": 1,
+    "explanation": "WHERE 절은 그룹화 이전에 개별 행을 필터링하므로, 급여가 2000을 초과하는 사원 행만 먼저 걸러진 뒤 그 결과를 대상으로 부서별 평균이 계산된다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 GROUP BY 절과 관련하여 옳지 않은 설명은?",
+    "choices": [
+      "GROUP BY는 지정한 컬럼(들)의 값이 같은 행끼리 묶는 역할을 한다.",
+      "GROUP BY는 ORDER BY보다 나중에 실행된다.",
+      "GROUP BY로 묶인 그룹에 대해 집계 함수를 적용할 수 있다.",
+      "GROUP BY 절은 HAVING보다 먼저 실행된다."
+    ],
+    "answer_index": 1,
+    "explanation": "SQL의 논리적 처리 순서상 GROUP BY는 ORDER BY보다 먼저 실행된다. 'GROUP BY는 ORDER BY보다 나중에 실행된다'는 설명이 틀린 것이다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 MIN 함수와 MAX 함수에 대한 설명으로 옳은 것은?",
+    "choices": [
+      "숫자형 데이터에만 사용할 수 있다.",
+      "숫자, 문자, 날짜 등 정렬 가능한 다양한 데이터 타입에 사용할 수 있다.",
+      "MIN, MAX는 NULL 값을 포함하여 계산에 반영한다.",
+      "MIN과 MAX는 반드시 GROUP BY 절과 함께 사용해야만 동작한다."
+    ],
+    "answer_index": 1,
+    "explanation": "MIN, MAX는 숫자뿐 아니라 문자열, 날짜 등 정렬 가능한 데이터 타입에 폭넓게 사용할 수 있으며, GROUP BY 없이도 전체 데이터를 대상으로 단독 사용할 수 있고, 계산 시 NULL 값은 제외한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "부서별 급여 합계가 가장 큰 순서로 정렬하여 조회하고자 할 때 필요한 절의 조합으로 옳은 것은?",
+    "choices": [
+      "GROUP BY DEPT_ID와 ORDER BY SUM(SALARY) DESC",
+      "HAVING DEPT_ID와 ORDER BY SUM(SALARY) DESC",
+      "GROUP BY DEPT_ID만 사용하고 ORDER BY는 사용할 수 없다.",
+      "WHERE DEPT_ID와 ORDER BY SUM(SALARY) DESC"
+    ],
+    "answer_index": 0,
+    "explanation": "부서별로 합계를 구하려면 GROUP BY DEPT_ID가 필요하고, 그 합계를 내림차순으로 정렬하려면 ORDER BY SUM(SALARY) DESC를 사용해야 한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 GROUP BY 절 사용 시 SELECT 절에 그룹화 기준에 없는 컬럼을 집계 함수 없이 그대로 사용하면 발생할 수 있는 문제로 옳은 것은?",
+    "choices": [
+      "하나의 그룹에 여러 값이 존재할 수 있어 어떤 값을 대표로 보여줄지 모호해지는 문제가 발생한다.",
+      "테이블의 실제 데이터가 변경된다.",
+      "쿼리 실행 속도가 항상 두 배로 느려진다.",
+      "해당 컬럼의 데이터 타입이 자동으로 문자열로 변경된다."
+    ],
+    "answer_index": 0,
+    "explanation": "그룹화 기준에 포함되지 않은 컬럼을 집계 없이 SELECT하면, 하나의 그룹 안에 여러 값이 섞여 있을 수 있어 결과가 모호해지는 문제가 있다. 대부분의 표준 DBMS는 이를 문법 오류로 처리한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "HAVING 절과 GROUP BY 절을 함께 사용할 때의 일반적인 작성 순서로 옳은 것은?",
+    "choices": [
+      "둘 중 아무 순서로 작성해도 무방하다.",
+      "GROUP BY와 HAVING은 같은 줄에 동시에 작성해야만 한다.",
+      "GROUP BY 절을 먼저 쓰고 그 뒤에 HAVING 절을 작성한다.",
+      "HAVING 절을 먼저 쓰고 그 뒤에 GROUP BY 절을 작성한다."
+    ],
+    "answer_index": 2,
+    "explanation": "SQL 문법상 GROUP BY 절을 먼저 작성하고, 그 그룹에 대한 조건을 지정하는 HAVING 절을 그 뒤에 작성하는 것이 올바른 순서이다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "조회 결과를 급여가 높은 순서대로 정렬하고자 할 때 사용하는 절은?",
+    "choices": [
+      "WHERE SALARY DESC",
+      "SORT BY SALARY DOWN",
+      "ORDER BY SALARY DESC",
+      "GROUP BY SALARY DESC"
+    ],
+    "answer_index": 2,
+    "explanation": "결과 집합을 정렬할 때는 ORDER BY 절을 사용하며, 내림차순 정렬은 DESC 키워드를 붙인다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "ORDER BY 절에서 정렬 방향을 지정하지 않았을 때 기본 정렬 순서는?",
+    "choices": [
+      "오름차순(ASC)",
+      "입력된 순서 그대로 유지",
+      "내림차순(DESC)",
+      "무작위 순서"
+    ],
+    "answer_index": 0,
+    "explanation": "ORDER BY 절에서 ASC나 DESC를 명시하지 않으면 기본값은 오름차순(ASC)이다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "여러 컬럼을 기준으로 정렬할 때 'ORDER BY DEPT_ID, SALARY DESC'의 의미로 옳은 것은?",
+    "choices": [
+      "DEPT_ID는 오름차순으로 먼저 정렬하고, 같은 DEPT_ID 내에서는 SALARY를 내림차순으로 정렬한다.",
+      "DEPT_ID와 SALARY 모두 내림차순으로 정렬한다.",
+      "DEPT_ID만 정렬하고 SALARY는 무시된다.",
+      "SALARY를 먼저 내림차순으로 정렬한 뒤 DEPT_ID로 다시 정렬한다."
+    ],
+    "answer_index": 0,
+    "explanation": "ORDER BY에 여러 컬럼을 나열하면 앞의 컬럼을 우선 기준으로 정렬하고, 값이 같은 경우에 한해 다음 컬럼을 기준으로 정렬한다. DESC는 바로 앞의 컬럼(SALARY)에만 적용되므로 DEPT_ID는 기본값인 오름차순이 적용된다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "ORDER BY 절에서 컬럼명 대신 SELECT 절의 컬럼 순번(위치)을 사용하여 정렬하는 것이 가능한가?",
+    "choices": [
+      "가능하다. 예를 들어 'ORDER BY 1'은 SELECT 절의 첫 번째 컬럼 기준 정렬을 의미한다.",
+      "순번 지정은 GROUP BY 절에서만 허용된다.",
+      "불가능하며 반드시 컬럼명을 사용해야 한다.",
+      "숫자형 컬럼에 대해서만 순번 지정이 가능하다."
+    ],
+    "answer_index": 0,
+    "explanation": "대부분의 SQL 구현체에서 ORDER BY 절은 SELECT 절에 나열된 컬럼의 순서(위치, 정수)를 이용해 정렬 기준을 지정하는 것을 허용한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "ORDER BY 절이 SQL 문의 논리적 실행 순서에서 차지하는 위치로 옳은 것은?",
+    "choices": [
+      "GROUP BY보다 먼저 실행된다.",
+      "WHERE 절보다 먼저 실행된다.",
+      "가장 먼저 실행된다.",
+      "가장 마지막에 실행된다."
+    ],
+    "answer_index": 3,
+    "explanation": "SQL의 논리적 처리 순서는 FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY이며, ORDER BY는 가장 마지막에 실행되어 최종 결과를 정렬한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 NULL 값이 포함된 컬럼을 ORDER BY로 정렬할 때의 일반적 특징으로 옳은 것은?",
+    "choices": [
+      "NULL이 포함된 컬럼은 ORDER BY 대상으로 지정할 수 없다.",
+      "NULL 값을 가진 행은 정렬 결과에서 항상 제외된다.",
+      "NULL의 정렬 위치(맨 앞/맨 뒤)는 DBMS나 옵션(NULLS FIRST/LAST)에 따라 달라질 수 있다.",
+      "NULL은 항상 숫자 0으로 취급되어 정렬된다."
+    ],
+    "answer_index": 2,
+    "explanation": "NULL의 정렬 순서는 DBMS의 기본 동작이나 NULLS FIRST/NULLS LAST 옵션 지정에 따라 달라질 수 있으며, 절대적인 표준 규칙으로 고정되어 있지 않다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 컬럼 별칭을 ORDER BY 절에서 사용할 수 있는지에 대한 설명으로 가장 옳은 것은?",
+    "choices": [
+      "별칭을 ORDER BY에 사용하면 항상 문법 오류가 발생한다.",
+      "별칭은 WHERE 절에서만 사용할 수 있다.",
+      "ORDER BY 절에서는 어떠한 경우에도 별칭을 사용할 수 없다.",
+      "대부분의 DBMS에서 SELECT 절에 정의한 별칭을 ORDER BY 절에서 그대로 사용할 수 있다."
+    ],
+    "answer_index": 3,
+    "explanation": "ORDER BY는 SELECT 절 이후, 논리적으로 가장 나중에 처리되므로 SELECT 절에서 정의된 별칭을 대부분의 DBMS에서 참조할 수 있다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "'ORDER BY SALARY ASC, HIRE_DATE DESC'의 해석으로 옳은 것은?",
+    "choices": [
+      "ASC와 DESC를 함께 사용할 수 없어 오류가 발생한다.",
+      "HIRE_DATE를 먼저 기준으로 정렬한 뒤 SALARY로 재정렬한다.",
+      "SALARY를 오름차순으로 정렬하고, SALARY가 같은 경우 HIRE_DATE를 내림차순으로 정렬한다.",
+      "SALARY와 HIRE_DATE 모두 오름차순으로 정렬한다."
+    ],
+    "answer_index": 2,
+    "explanation": "ORDER BY의 각 컬럼에는 개별적으로 ASC 또는 DESC를 지정할 수 있으며, 앞의 기준이 동일할 때만 다음 기준이 적용된다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "GROUP BY와 ORDER BY를 함께 사용할 때 일반적인 절의 작성 순서로 옳은 것은?",
+    "choices": [
+      "SELECT ... ORDER BY ... FROM ... WHERE ... GROUP BY ... HAVING ...",
+      "SELECT ... FROM ... ORDER BY ... GROUP BY ... WHERE ... HAVING ...",
+      "SELECT ... FROM ... WHERE ... GROUP BY ... HAVING ... ORDER BY ...",
+      "SELECT ... FROM ... HAVING ... WHERE ... GROUP BY ... ORDER BY ..."
+    ],
+    "answer_index": 2,
+    "explanation": "표준적인 SQL 문 작성 순서는 SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY이며 ORDER BY는 가장 마지막에 작성한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 ORDER BY 절에서 문자열 컬럼을 정렬할 때 기준이 되는 것으로 가장 적절한 것은?",
+    "choices": [
+      "항상 알파벳 역순으로 고정",
+      "항상 문자열의 길이 순서",
+      "항상 유니코드 코드값과 무관한 임의 순서",
+      "DBMS와 문자 집합(character set)에 설정된 정렬 규칙(collation)에 따른 사전식 순서"
+    ],
+    "answer_index": 3,
+    "explanation": "문자열 컬럼의 ORDER BY 정렬은 해당 DBMS/컬럼에 설정된 정렬 규칙(collation)에 기반한 사전식 순서를 따르는 것이 일반적이다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 SQL 'SELECT DEPT_ID, COUNT(*) AS CNT FROM EMPLOYEE GROUP BY DEPT_ID ORDER BY CNT DESC;'에서 CNT를 ORDER BY에 사용할 수 있는 이유는?",
+    "choices": [
+      "CNT는 EMPLOYEE 테이블에 실제로 존재하는 컬럼이기 때문이다.",
+      "ORDER BY는 SELECT 절에서 정의된 별칭을 참조할 수 있기 때문이다.",
+      "COUNT 함수는 별칭 없이도 항상 CNT라는 이름으로 고정되기 때문이다.",
+      "GROUP BY 절에 CNT가 이미 명시되어 있기 때문이다."
+    ],
+    "answer_index": 1,
+    "explanation": "ORDER BY는 논리적으로 SELECT 절 이후에 처리되므로, SELECT 절에서 집계 함수 결과에 부여한 별칭(CNT)을 그대로 참조하여 정렬 기준으로 사용할 수 있다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 정렬 결과에서 상위 N건만 가져오고자 할 때 흔히 함께 사용하는 절/구문으로 옳지 않은 것은?",
+    "choices": [
+      "ROWNUM 조건 (Oracle)",
+      "LIMIT N (MySQL/PostgreSQL 등)",
+      "HAVING TOP N",
+      "FETCH FIRST N ROWS ONLY (표준 SQL)"
+    ],
+    "answer_index": 2,
+    "explanation": "'HAVING TOP N'은 존재하지 않는 문법이다. 표준 SQL의 FETCH FIRST N ROWS ONLY, MySQL/PostgreSQL의 LIMIT, Oracle의 ROWNUM(또는 FETCH FIRST)은 모두 상위 N건을 제한하는 데 사용되는 실제 구문이다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "ORDER BY 절 없이 SELECT 문을 실행했을 때 반환되는 행의 순서에 대한 설명으로 가장 옳은 것은?",
+    "choices": [
+      "항상 입력된 순서와 동일하게 반환됨이 SQL 표준으로 보장된다.",
+      "항상 기본키(Primary Key) 순서로 반환됨이 SQL 표준으로 보장된다.",
+      "DBMS의 내부 처리 방식에 따라 달라질 수 있으며 특정 순서를 보장하지 않는다.",
+      "항상 알파벳 순으로 반환됨이 SQL 표준으로 보장된다."
+    ],
+    "answer_index": 2,
+    "explanation": "ORDER BY를 명시하지 않으면 결과 행의 순서는 SQL 표준상 보장되지 않으며, 옵티마이저의 실행 계획 등 내부적인 요인에 따라 달라질 수 있다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 ORDER BY DESC와 관련하여 옳은 설명은?",
+    "choices": [
+      "DESC는 반드시 GROUP BY와 함께만 사용할 수 있다.",
+      "DESC는 해당 컬럼을 결과에서 제외하라는 의미이다.",
+      "DESC는 문자열 컬럼에는 사용할 수 없다.",
+      "DESC는 지정된 컬럼을 내림차순(큰 값에서 작은 값 순)으로 정렬하라는 의미이다."
+    ],
+    "answer_index": 3,
+    "explanation": "DESC(Descending)는 정렬 순서를 내림차순으로 지정하는 키워드로, 숫자·문자·날짜 등 정렬 가능한 모든 데이터 타입에 사용할 수 있다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 ORDER BY 절에서 여러 정렬 기준을 지정할 때 각 컬럼 사이를 구분하는 방법으로 옳은 것은?",
+    "choices": [
+      "AND 키워드로 연결한다.",
+      "OR 키워드로 연결한다.",
+      "쉼표(,)로 구분하여 나열한다.",
+      "세미콜론(;)으로 구분하여 나열한다."
+    ],
+    "answer_index": 2,
+    "explanation": "ORDER BY 절에 여러 정렬 기준 컬럼을 지정할 때는 SELECT 절과 마찬가지로 쉼표로 구분하여 나열한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "EMPLOYEE 테이블과 DEPARTMENT 테이블을 부서 ID 기준으로 연결하여, 두 테이블 모두에 일치하는 데이터가 있는 행만 조회하는 조인 방식은?",
+    "choices": [
+      "LEFT OUTER JOIN",
+      "SELF JOIN",
+      "INNER JOIN",
+      "CROSS JOIN"
+    ],
+    "answer_index": 2,
+    "explanation": "INNER JOIN(내부 조인)은 조인 조건을 만족하는, 즉 양쪽 테이블 모두에 일치하는 데이터가 존재하는 행만 결과에 포함한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "LEFT OUTER JOIN에 대한 설명으로 가장 옳은 것은?",
+    "choices": [
+      "왼쪽 테이블의 모든 행을 포함하고, 오른쪽 테이블에 일치하는 데이터가 없으면 해당 컬럼은 NULL로 채워진다.",
+      "양쪽 테이블에서 일치하는 행만 반환하며 나머지는 모두 제외한다.",
+      "두 테이블의 모든 행의 조합(카티션 곱)을 반환한다.",
+      "오른쪽 테이블의 모든 행을 포함하고, 왼쪽 테이블에 일치하는 데이터가 없으면 NULL로 채워진다."
+    ],
+    "answer_index": 0,
+    "explanation": "LEFT OUTER JOIN은 왼쪽(기준) 테이블의 모든 행을 결과에 포함시키고, 오른쪽 테이블에서 조인 조건을 만족하는 데이터가 없으면 오른쪽 테이블 컬럼 값을 NULL로 채운다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "두 테이블 사이에 조인 조건 없이 모든 행의 조합(카티션 곱)을 생성하는 조인 방식은?",
+    "choices": [
+      "CROSS JOIN",
+      "RIGHT OUTER JOIN",
+      "INNER JOIN",
+      "NATURAL JOIN"
+    ],
+    "answer_index": 0,
+    "explanation": "CROSS JOIN은 조인 조건 없이 한 테이블의 모든 행과 다른 테이블의 모든 행을 조합하여 카티션 곱(Cartesian Product) 결과를 만든다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "같은 테이블을 자기 자신과 조인하여, 예를 들어 사원과 그 사원의 관리자(같은 EMPLOYEE 테이블에 존재)를 함께 조회할 때 사용하는 조인 방식은?",
+    "choices": [
+      "CROSS JOIN",
+      "SELF JOIN",
+      "NATURAL JOIN",
+      "UNION JOIN"
+    ],
+    "answer_index": 1,
+    "explanation": "SELF JOIN(자체 조인)은 동일한 테이블을 서로 다른 별칭으로 두 번 참조하여 자기 자신과 조인하는 방식으로, 사원-관리자 관계처럼 계층적 데이터를 조회할 때 흔히 사용된다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "FULL OUTER JOIN에 대한 설명으로 가장 옳은 것은?",
+    "choices": [
+      "양쪽 테이블에서 일치하는 행만 반환한다.",
+      "양쪽 테이블의 모든 행을 포함하며, 어느 한쪽에 일치하는 데이터가 없으면 해당 컬럼은 NULL로 채워진다.",
+      "왼쪽 테이블의 행만 모두 포함하고 오른쪽은 무시한다.",
+      "오른쪽 테이블의 행만 모두 포함하고 왼쪽은 무시한다."
+    ],
+    "answer_index": 1,
+    "explanation": "FULL OUTER JOIN은 LEFT OUTER JOIN과 RIGHT OUTER JOIN의 결과를 합친 것과 같이, 양쪽 테이블의 모든 행을 결과에 포함하고 일치하지 않는 부분은 NULL로 채운다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 표준 SQL의 명시적 조인 구문 'A INNER JOIN B ON A.컬럼 = B.컬럼'과 동일한 결과를 내는 암시적(implicit) 조인 표기 방식은?",
+    "choices": [
+      "FROM A UNION B ON A.컬럼 = B.컬럼",
+      "FROM A, B GROUP BY A.컬럼 = B.컬럼",
+      "FROM A JOIN B",
+      "FROM A, B WHERE A.컬럼 = B.컬럼"
+    ],
+    "answer_index": 3,
+    "explanation": "FROM 절에 테이블을 쉼표로 나열하고 WHERE 절에 조인 조건을 명시하는 방식은 명시적 JOIN 구문 이전부터 쓰이던 암시적 조인(equi-join) 표기 방법으로, 동일한 결과를 낼 수 있다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "두 테이블을 조인할 때 동일한 이름을 가진 컬럼들을 자동으로 찾아 등가 조인을 수행하는 조인 방식은?",
+    "choices": [
+      "CROSS JOIN",
+      "NATURAL JOIN",
+      "FULL JOIN",
+      "SELF JOIN"
+    ],
+    "answer_index": 1,
+    "explanation": "NATURAL JOIN은 두 테이블에서 이름이 동일한 컬럼을 자동으로 찾아 그 컬럼들을 기준으로 등가 조인을 수행한다. 다만 의도치 않은 컬럼까지 조인 기준에 포함될 위험이 있어 실무에서는 주의가 필요하다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 조인 조건에 등호(=)가 아닌 부등호(예: <, >, BETWEEN)를 사용하는 조인을 부르는 명칭은?",
+    "choices": [
+      "카티션 조인(Cartesian Join)",
+      "자연 조인(Natural Join)",
+      "비등가 조인(Non-Equi Join)",
+      "등가 조인(Equi Join)"
+    ],
+    "answer_index": 2,
+    "explanation": "조인 조건에 등호가 아닌 비교 연산자(부등호, BETWEEN 등)를 사용하는 조인을 비등가 조인(Non-Equi Join)이라고 한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 RIGHT OUTER JOIN에 대한 설명으로 가장 옳은 것은?",
+    "choices": [
+      "왼쪽 테이블의 모든 행을 포함하고, 오른쪽 테이블에 일치하는 데이터가 없으면 NULL로 채워진다.",
+      "양쪽 테이블 모두에서 일치하는 행만 반환한다.",
+      "오른쪽 테이블의 모든 행을 포함하고, 왼쪽 테이블에 일치하는 데이터가 없으면 해당 컬럼은 NULL로 채워진다.",
+      "조인 조건과 무관하게 모든 조합을 반환한다."
+    ],
+    "answer_index": 2,
+    "explanation": "RIGHT OUTER JOIN은 오른쪽 테이블의 모든 행을 결과에 포함시키고, 왼쪽 테이블에서 일치하는 데이터가 없으면 왼쪽 테이블의 컬럼 값을 NULL로 채운다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "세 개 이상의 테이블을 조인할 때에 대한 설명으로 옳은 것은?",
+    "choices": [
+      "세 개 이상의 테이블 조인 시 항상 CROSS JOIN만 가능하다.",
+      "SQL 표준에서는 두 개의 테이블까지만 조인이 허용된다.",
+      "JOIN 절을 여러 번 연속해서 사용하여 순차적으로 조인할 수 있다.",
+      "세 개 이상의 테이블을 조인하려면 반드시 서브쿼리를 사용해야 한다."
+    ],
+    "answer_index": 2,
+    "explanation": "SQL에서는 JOIN 절을 여러 번 이어서 작성함으로써 세 개 이상의 테이블을 순차적으로 조인할 수 있으며, 이는 매우 일반적인 패턴이다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 SQL 'SELECT E.EMP_NAME, D.DEPT_NAME FROM EMPLOYEE E JOIN DEPARTMENT D ON E.DEPT_ID = D.DEPT_ID;'에서 별칭 E와 D를 사용하는 주된 이유는?",
+    "choices": [
+      "NULL 값을 자동으로 제거하기 위해",
+      "여러 테이블에 존재할 수 있는 동일한 이름의 컬럼을 어느 테이블 소속인지 명확히 구분하고 SQL을 간결하게 작성하기 위해",
+      "조인 성능을 강제로 향상시키기 위한 필수 문법이기 때문에",
+      "테이블의 실제 이름을 영구적으로 변경하기 위해"
+    ],
+    "answer_index": 1,
+    "explanation": "테이블 별칭은 여러 테이블을 조인할 때 컬럼이 어느 테이블에 속하는지 명확히 하고 SQL 문을 간결하게 작성하기 위해 사용하며, 테이블의 실제 이름을 변경하거나 성능/NULL 처리와는 관련이 없다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 SELF JOIN을 작성할 때 반드시 필요한 것은?",
+    "choices": [
+      "반드시 서브쿼리 사용",
+      "반드시 두 개 이상의 서로 다른 물리적 테이블",
+      "동일한 테이블을 구분하기 위한 서로 다른 테이블 별칭",
+      "반드시 GROUP BY 절"
+    ],
+    "answer_index": 2,
+    "explanation": "SELF JOIN은 같은 테이블을 두 번 참조하므로, 두 참조를 구분하기 위해 반드시 서로 다른 별칭을 부여해야 한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 INNER JOIN과 WHERE 절을 이용한 암시적 조인의 결과 차이에 대한 설명으로 가장 옳은 것은?",
+    "choices": [
+      "두 방식은 근본적으로 다른 결과를 낼 수밖에 없다.",
+      "WHERE 절을 이용한 암시적 조인은 항상 OUTER JOIN과 동일하게 동작한다.",
+      "조인 조건이 동일하게 작성되었다면 두 방식은 동일한 결과를 반환한다.",
+      "INNER JOIN 방식은 항상 더 많은 행을 반환한다."
+    ],
+    "answer_index": 2,
+    "explanation": "명시적 INNER JOIN 구문과, FROM 절에 테이블을 나열하고 WHERE 절에 조인 조건을 작성하는 암시적 방식은 동일한 조인 조건이라면 원칙적으로 같은 결과를 반환한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 조인 시 조인 조건을 누락했을 때 발생할 수 있는 문제로 가장 적절한 것은?",
+    "choices": [
+      "결과 행 수가 항상 0이 된다.",
+      "SQL이 자동으로 조인 조건을 추론하여 항상 올바른 결과를 반환한다.",
+      "의도치 않게 카티션 곱(Cartesian Product)이 발생하여 예상보다 훨씬 많은 행이 반환될 수 있다.",
+      "쿼리가 항상 실행되지 않고 오류만 발생한다."
+    ],
+    "answer_index": 2,
+    "explanation": "조인 조건을 명시하지 않으면(암시적 조인에서 WHERE 조건 누락 등) 두 테이블의 모든 행 조합이 생성되는 카티션 곱이 발생하여 의도하지 않은 대량의 결과가 반환될 수 있다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 EMPLOYEE(사원) 테이블과 DEPARTMENT(부서) 테이블을 조인할 때, 특정 부서에 소속된 사원이 없더라도 모든 부서 정보를 반드시 결과에 포함시키고자 한다면 사용해야 할 조인은?",
+    "choices": [
+      "INNER JOIN",
+      "CROSS JOIN",
+      "NATURAL INNER JOIN",
+      "DEPARTMENT 테이블을 기준으로 하는 LEFT OUTER JOIN (또는 RIGHT OUTER JOIN, 기준 테이블 위치에 따라)"
+    ],
+    "answer_index": 3,
+    "explanation": "소속 사원이 없는 부서까지 결과에 포함하려면 부서 테이블을 기준으로 OUTER JOIN(부서 테이블이 왼쪽이면 LEFT OUTER JOIN)을 사용해야 하며, INNER JOIN은 양쪽에 일치하는 데이터가 있는 행만 반환하므로 사원이 없는 부서는 제외된다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 조인 결과에서 특정 부서(DEPARTMENT)에는 존재하지만 EMPLOYEE 테이블에서 해당 부서로 조인되는 사원 데이터가 없을 때, LEFT OUTER JOIN(DEPARTMENT 기준) 결과의 EMPLOYEE 관련 컬럼 값으로 옳은 것은?",
+    "choices": [
+      "해당 행 자체가 결과에서 제외됨",
+      "0",
+      "빈 문자열('')",
+      "NULL"
+    ],
+    "answer_index": 3,
+    "explanation": "OUTER JOIN에서 기준 테이블 쪽에는 데이터가 있지만 반대편 테이블에 일치하는 데이터가 없는 경우, 반대편 테이블의 컬럼들은 NULL로 채워져서 결과 행에 포함된다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 3개의 테이블(A, B, C)을 조인할 때 'A JOIN B ON ... JOIN C ON ...' 형태의 SQL 작성 방식에 대한 설명으로 옳은 것은?",
+    "choices": [
+      "A, B, C 세 테이블을 항상 동시에 하나의 단일 연산으로만 처리하며 순서 개념이 존재하지 않는다.",
+      "C 테이블은 반드시 서브쿼리 형태로만 작성해야 한다.",
+      "먼저 A와 B를 조인 조건에 따라 결합한 뒤, 그 결과를 다시 C와 조인 조건에 따라 결합하는 방식으로 이해할 수 있다.",
+      "이러한 다중 조인은 SQL 표준에서 지원되지 않는다."
+    ],
+    "answer_index": 2,
+    "explanation": "여러 테이블을 연속으로 조인하는 SQL은 개념적으로 앞선 조인 결과를 다음 테이블과 다시 조인하는 방식으로 순차적으로 이해할 수 있다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 두 테이블 사이에 공통 컬럼명이 여러 개 존재할 때 NATURAL JOIN을 사용하면 발생할 수 있는 위험으로 가장 적절한 것은?",
+    "choices": [
+      "쿼리가 항상 실행되지 않고 문법 오류만 발생한다.",
+      "결과에 항상 중복 행이 포함된다.",
+      "NATURAL JOIN은 두 개 이상의 공통 컬럼이 있으면 자동으로 첫 번째 컬럼만 사용한다.",
+      "의도하지 않은 컬럼까지 조인 조건에 자동으로 포함되어 예상과 다른 결과가 나올 수 있다."
+    ],
+    "answer_index": 3,
+    "explanation": "NATURAL JOIN은 이름이 같은 모든 컬럼을 자동으로 조인 조건에 포함시키므로, 의도치 않게 여러 컬럼이 조인 기준에 포함되어 개발자가 의도한 것과 다른 결과가 나올 위험이 있다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 CROSS JOIN의 결과 행 수에 대한 설명으로 옳은 것은?",
+    "choices": [
+      "항상 두 테이블 중 더 적은 쪽의 행 수와 같다.",
+      "왼쪽 테이블의 행 수와 오른쪽 테이블의 행 수를 곱한 값과 같다.",
+      "왼쪽 테이블의 행 수와 오른쪽 테이블의 행 수를 더한 값과 같다.",
+      "항상 1행만 반환된다."
+    ],
+    "answer_index": 1,
+    "explanation": "CROSS JOIN은 두 테이블의 모든 행 조합을 생성하므로 결과 행 수는 (왼쪽 테이블 행 수) × (오른쪽 테이블 행 수)가 된다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "사원(EMPLOYEE) 테이블에서 같은 부서 소속이면서 급여가 더 높은 다른 사원을 찾는 등, 동일 테이블 내 행끼리 비교가 필요한 경우 사용하기에 가장 적절한 조인은?",
+    "choices": [
+      "RIGHT OUTER JOIN",
+      "SELF JOIN",
+      "CROSS JOIN",
+      "FULL OUTER JOIN"
+    ],
+    "answer_index": 1,
+    "explanation": "동일 테이블 내의 서로 다른 행을 비교해야 하는 경우, 같은 테이블을 서로 다른 별칭으로 두 번 참조하는 SELF JOIN이 적합하다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 조인 조건을 ON 절이 아닌 USING 절로 작성할 때의 특징으로 옳은 것은?",
+    "choices": [
+      "USING 절은 OUTER JOIN에서는 절대 사용할 수 없다.",
+      "USING 절은 세 개 이상의 컬럼을 조인 조건으로 지정할 수 없다.",
+      "USING 절은 서로 다른 이름의 컬럼끼리도 자유롭게 비교할 수 있다.",
+      "양쪽 테이블에 동일한 이름으로 존재하는 컬럼을 지정하여 간결하게 등가 조인 조건을 작성할 수 있다."
+    ],
+    "answer_index": 3,
+    "explanation": "USING 절은 양쪽 테이블에 동일한 이름으로 존재하는 컬럼을 괄호 안에 나열하여 등가 조인 조건을 간결하게 표현하는 문법으로, 표준 SQL에서 지원된다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 조인을 사용하는 이유로 가장 적절한 것은?",
+    "choices": [
+      "테이블의 데이터를 물리적으로 하나의 테이블로 영구 병합하기 위해",
+      "특정 컬럼의 데이터 타입을 변경하기 위해",
+      "정규화되어 여러 테이블로 분리된 데이터를 하나의 결과 집합으로 함께 조회하기 위해",
+      "인덱스를 생성하기 위해"
+    ],
+    "answer_index": 2,
+    "explanation": "관계형 데이터베이스는 정규화를 통해 데이터를 여러 테이블로 나누어 저장하는데, 조인은 이렇게 분리된 관련 테이블들의 데이터를 조합하여 하나의 조회 결과로 함께 보여주기 위해 사용된다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 EMPLOYEE 테이블과 DEPARTMENT 테이블을 조인할 때 조인 조건으로 사용하기에 가장 적절한 컬럼 쌍은? (EMPLOYEE.DEPT_ID가 DEPARTMENT.DEPT_ID를 참조하는 외래키인 경우)",
+    "choices": [
+      "EMPLOYEE.HIRE_DATE = DEPARTMENT.DEPT_NAME",
+      "EMPLOYEE.SALARY = DEPARTMENT.DEPT_ID",
+      "EMPLOYEE.DEPT_ID = DEPARTMENT.DEPT_ID",
+      "EMPLOYEE.EMP_NAME = DEPARTMENT.DEPT_NAME"
+    ],
+    "answer_index": 2,
+    "explanation": "외래키 관계에 있는 EMPLOYEE.DEPT_ID와 DEPARTMENT.DEPT_ID를 조인 조건으로 사용하는 것이 의미상 올바르다. 나머지 조합은 서로 관련 없는 컬럼을 비교하는 것이므로 부적절하다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 OUTER JOIN에서 NULL이 채워진 행을 골라내고자 할 때 WHERE 절에 함께 사용하기에 적절한 조건은?",
+    "choices": [
+      "반대편 테이블의 조인 컬럼에 대한 IS NULL 조건",
+      "반대편 테이블의 조인 컬럼에 대한 LIKE '%' 조건",
+      "반대편 테이블의 조인 컬럼에 대한 IS NOT NULL 조건",
+      "반대편 테이블의 조인 컬럼에 대한 = 0 조건"
+    ],
+    "answer_index": 0,
+    "explanation": "OUTER JOIN 이후 결과에서 매칭되지 않아 NULL로 채워진 반대편 테이블 컬럼에 대해 IS NULL 조건을 걸면, 상대 테이블에 대응 데이터가 없는(즉 매칭되지 않은) 행만 골라낼 수 있다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 두 개의 조인 조건(예: 부서 ID와 근무지 ID를 동시에 비교)을 사용하는 조인에 대한 설명으로 옳은 것은?",
+    "choices": [
+      "복합 조인 조건은 OUTER JOIN에서는 사용할 수 없다.",
+      "하나의 조인에는 반드시 하나의 조건만 지정할 수 있다.",
+      "ON 절에서 AND로 여러 컬럼 비교 조건을 연결하여 복합 조인 조건을 지정할 수 있다.",
+      "복합 조인 조건은 반드시 OR로만 연결해야 한다."
+    ],
+    "answer_index": 2,
+    "explanation": "ON 절에서는 AND 연산자를 사용해 여러 컬럼 비교 조건을 동시에 만족해야 하는 복합 조인 조건을 지정할 수 있으며, 이는 INNER JOIN과 OUTER JOIN 모두에서 사용 가능하다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 조인의 종류를 결정할 때 고려해야 할 핵심 기준으로 가장 적절한 것은?",
+    "choices": [
+      "테이블 이름의 알파벳 순서",
+      "테이블에 저장된 데이터의 총 용량 크기",
+      "테이블 생성 날짜",
+      "양쪽 테이블 중 일치하지 않는 데이터를 결과에 포함시킬 것인지, 포함한다면 어느 쪽 테이블 기준으로 포함시킬 것인지"
+    ],
+    "answer_index": 3,
+    "explanation": "조인 방식(INNER, LEFT/RIGHT/FULL OUTER, CROSS 등)을 선택하는 핵심 기준은 일치하지 않는 데이터를 결과에 포함할지 여부와, 포함한다면 어느 테이블을 기준으로 할지에 달려 있다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 세 개의 테이블을 조인하되, 그 중 한 테이블은 반드시 모든 행이 포함되어야 하고 나머지 두 테이블은 조건에 맞는 것만 포함되어도 되는 상황에서 가장 적합한 조인 조합은?",
+    "choices": [
+      "세 테이블 모두 CROSS JOIN으로 연결",
+      "세 테이블 모두 반드시 INNER JOIN으로만 연결",
+      "기준 테이블을 왼쪽에 두고 나머지 테이블들과 LEFT OUTER JOIN으로 순차 연결",
+      "조인 대신 반드시 UNION을 사용"
+    ],
+    "answer_index": 2,
+    "explanation": "특정 테이블의 모든 행을 반드시 보존하면서 다른 테이블의 데이터를 있으면 붙이고 없으면 NULL로 채우고 싶을 때는 그 테이블을 기준(왼쪽)으로 하는 LEFT OUTER JOIN을 순차적으로 사용하는 것이 적합하다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 EQUI JOIN(등가 조인)에 대한 설명으로 옳은 것은?",
+    "choices": [
+      "두 테이블의 컬럼 개수가 정확히 같아야만 성립하는 조인이다.",
+      "조인 조건 없이 이루어지는 조인이다.",
+      "조인 조건에 항상 BETWEEN 연산자만 사용하는 조인이다.",
+      "조인 조건에 등호(=) 연산자를 사용하는 조인이다."
+    ],
+    "answer_index": 3,
+    "explanation": "등가 조인(Equi Join)은 조인 조건에 등호(=) 연산자를 사용하여 두 테이블의 값이 정확히 일치하는 행을 연결하는 가장 일반적인 조인 형태이다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 부서 테이블에 사원이 한 명도 없는 부서가 있는지 확인하기 위한 조인 기반 접근 방법으로 가장 적절한 것은?",
+    "choices": [
+      "DEPARTMENT 테이블만 단독으로 SELECT한다.",
+      "DEPARTMENT와 EMPLOYEE를 CROSS JOIN한 뒤 아무 조건도 걸지 않는다.",
+      "DEPARTMENT와 EMPLOYEE를 INNER JOIN하고 결과가 없는 부서를 찾는다(원천적으로 불가능).",
+      "DEPARTMENT를 기준으로 LEFT OUTER JOIN한 뒤 EMPLOYEE 쪽 조인 컬럼이 NULL인 행을 찾는다."
+    ],
+    "answer_index": 3,
+    "explanation": "사원이 없는 부서까지 확인하려면 부서를 기준으로 LEFT OUTER JOIN한 뒤, 매칭되는 사원이 없어 NULL로 채워진 행을 찾는 방식이 적절하다. INNER JOIN은애초에 일치하지 않는 부서를 결과에서 제외하므로 이 목적에 부적합하다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 조인 시 성능 및 정확성을 위해 조인 컬럼에 대해 일반적으로 권장되는 사항으로 가장 적절한 것은?",
+    "choices": [
+      "조인에 자주 사용되는 컬럼(주로 기본키/외래키)에는 인덱스를 생성하는 것이 조회 성능에 유리하다.",
+      "조인 컬럼의 데이터 타입은 서로 다를수록 좋다.",
+      "조인 컬럼은 반드시 문자열 타입이어야 한다.",
+      "조인 컬럼에는 어떠한 경우에도 인덱스를 생성해서는 안 된다."
+    ],
+    "answer_index": 0,
+    "explanation": "조인에 자주 사용되는 컬럼(대개 기본키와 외래키)에 인덱스를 생성하면 조인 시 일치하는 행을 빠르게 찾을 수 있어 조회 성능 향상에 도움이 된다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다른 SELECT 문 내부에 포함되어 그 결과를 이용하는 SELECT 문을 무엇이라 하는가?",
+    "choices": [
+      "프로시저(Procedure)",
+      "인덱스(Index)",
+      "서브쿼리(Subquery)",
+      "트리거(Trigger)"
+    ],
+    "answer_index": 2,
+    "explanation": "서브쿼리는 다른 SQL 문(주로 SELECT, WHERE, FROM, HAVING 등)의 내부에 포함되어 그 결과를 활용하는 SELECT 문을 말한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "서브쿼리가 정확히 하나의 값(단일 행, 단일 컬럼)만 반환할 때 이를 무엇이라 하는가?",
+    "choices": [
+      "다중 행 서브쿼리(Multi-Row Subquery)",
+      "인라인 뷰(Inline View) 전용 용어",
+      "상관 서브쿼리(Correlated Subquery) 전용 용어",
+      "단일 행 서브쿼리(Single-Row Subquery, 스칼라 서브쿼리)"
+    ],
+    "answer_index": 3,
+    "explanation": "정확히 하나의 행과 하나의 컬럼, 즉 단일 값을 반환하는 서브쿼리를 단일 행(스칼라) 서브쿼리라 하며, 등호(=) 등 단일 값 비교 연산자와 함께 사용할 수 있다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "서브쿼리가 여러 행을 반환할 수 있을 때, WHERE 절에서 이를 등호(=)로 비교하면 어떤 문제가 발생하는가?",
+    "choices": [
+      "항상 첫 번째 반환값만 자동으로 사용되어 문제없이 실행된다.",
+      "항상 마지막 반환값만 자동으로 사용되어 문제없이 실행된다.",
+      "값이 여러 개면 자동으로 IN 연산자로 변환되어 실행된다.",
+      "여러 행이 반환되면 단일 값 비교 연산자(=)와 함께 사용할 수 없어 오류가 발생한다."
+    ],
+    "answer_index": 3,
+    "explanation": "단일 값 비교 연산자(=, >, < 등)는 서브쿼리가 정확히 하나의 값을 반환할 것을 전제로 하므로, 서브쿼리가 여러 행을 반환하면 런타임 오류가 발생한다. 이런 경우 IN, ANY, ALL 등을 사용해야 한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "서브쿼리가 여러 행을 반환할 때 그 중 하나라도 일치하면 조건을 만족시키고자 할 때 사용하는 연산자는?",
+    "choices": [
+      "EXISTS만 가능하며 다른 연산자는 불가능하다.",
+      "IN",
+      "BETWEEN",
+      "="
+    ],
+    "answer_index": 1,
+    "explanation": "IN 연산자는 서브쿼리가 반환하는 여러 값 중 하나라도 일치하면 조건을 만족하는 것으로 처리하며, 다중 행 서브쿼리와 함께 자주 사용된다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "서브쿼리가 반환하는 여러 값 중 어느 하나보다만 크면 조건을 만족시키고자 할 때 사용하는 연산자는?",
+    "choices": [
+      "> ANY (또는 SOME)",
+      "IN만 가능",
+      "= ANY만 가능",
+      "> ALL"
+    ],
+    "answer_index": 0,
+    "explanation": "'> ANY'(SOME과 동의어)는 서브쿼리가 반환하는 값들 중 하나라도 그 값보다 크면 조건을 만족한다. 이는 서브쿼리 결과 중 최솟값보다 크기만 하면 참이 되는 것과 같다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "서브쿼리가 반환하는 모든 값보다 커야 조건을 만족시키고자 할 때 사용하는 연산자는?",
+    "choices": [
+      "EXISTS",
+      "> ALL",
+      "IN",
+      "> ANY"
+    ],
+    "answer_index": 1,
+    "explanation": "'> ALL'은 서브쿼리가 반환하는 모든 값보다 커야 조건을 만족하며, 이는 서브쿼리 결과의 최댓값보다 커야 하는 것과 동일한 의미이다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "메인 쿼리의 컬럼 값을 참조하여 서브쿼리가 메인 쿼리의 매 행마다 반복적으로 실행되는 서브쿼리를 무엇이라 하는가?",
+    "choices": [
+      "스칼라 서브쿼리 전용 명칭",
+      "인라인 뷰(Inline View)",
+      "상관 서브쿼리(Correlated Subquery)",
+      "비상관 서브쿼리(Non-Correlated Subquery)"
+    ],
+    "answer_index": 2,
+    "explanation": "상관 서브쿼리는 서브쿼리 내부에서 메인 쿼리의 컬럼을 참조하기 때문에, 메인 쿼리의 각 행이 처리될 때마다 그 행의 값에 따라 서브쿼리가 다시 평가되는 방식으로 동작한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "FROM 절에 사용되어 하나의 가상 테이블처럼 취급되는 서브쿼리를 무엇이라 하는가?",
+    "choices": [
+      "상관 서브쿼리",
+      "다중 컬럼 서브쿼리 전용 명칭",
+      "인라인 뷰(Inline View)",
+      "스칼라 서브쿼리"
+    ],
+    "answer_index": 2,
+    "explanation": "FROM 절에 작성되어 하나의 임시 테이블처럼 취급되는 서브쿼리를 인라인 뷰(Inline View)라고 부른다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 EXISTS 연산자에 대한 설명으로 가장 옳은 것은?",
+    "choices": [
+      "EXISTS는 WHERE 절이 아닌 SELECT 절에서만 사용할 수 있다.",
+      "서브쿼리 결과로 반환되는 행이 하나라도 존재하는지 여부만 확인하며, 그 값 자체는 사용하지 않는다.",
+      "서브쿼리가 반드시 단일 값을 반환해야만 사용할 수 있다.",
+      "서브쿼리가 반환하는 첫 번째 행의 값을 그대로 반환한다."
+    ],
+    "answer_index": 1,
+    "explanation": "EXISTS는 서브쿼리가 하나 이상의 행을 반환하는지(존재 여부)만을 참/거짓으로 판단하며, 서브쿼리가 실제로 어떤 값을 반환하는지는 중요하지 않다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "특정 부서에 소속된 사원이 한 명도 없는 부서를 조회하고자 할 때 사용하기에 적절한 연산자는?",
+    "choices": [
+      "EXISTS",
+      "IN",
+      "ANY",
+      "NOT EXISTS"
+    ],
+    "answer_index": 3,
+    "explanation": "NOT EXISTS는 서브쿼리 결과가 존재하지 않는 경우를 찾는 데 사용되므로, 특정 부서에 대응하는 사원이 하나도 없는 경우를 확인하는 데 적합하다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 스칼라 서브쿼리(Scalar Subquery)를 사용할 수 있는 위치로 가장 적절한 것은?",
+    "choices": [
+      "FROM 절에서만 사용할 수 있다.",
+      "SELECT 절, WHERE 절 등 단일 값이 필요한 위치",
+      "GROUP BY 절에서만 사용할 수 있다.",
+      "ORDER BY 절에서는 절대 사용할 수 없다."
+    ],
+    "answer_index": 1,
+    "explanation": "스칼라 서브쿼리는 정확히 하나의 값을 반환하므로 SELECT 절, WHERE 절 등 단일 값이 필요한 다양한 위치에서 사용할 수 있다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 서브쿼리와 조인(JOIN)의 관계에 대한 설명으로 가장 옳은 것은?",
+    "choices": [
+      "조인은 항상 서브쿼리보다 빠르게 실행된다.",
+      "많은 경우 서브쿼리로 작성한 로직을 조인으로 대체하여 작성할 수 있으며, 상황에 따라 성능 차이가 발생할 수 있다.",
+      "서브쿼리는 항상 조인보다 빠르게 실행된다.",
+      "서브쿼리와 조인은 근본적으로 전혀 다른 목적을 위해서만 사용되며 서로 대체할 수 없다."
+    ],
+    "answer_index": 1,
+    "explanation": "동일한 요구사항을 서브쿼리와 조인 양쪽 방식으로 구현할 수 있는 경우가 많으며, 실제 성능은 데이터 분포, 인덱스, 옵티마이저의 실행 계획 등에 따라 달라질 수 있다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 비상관(Non-Correlated) 서브쿼리에 대한 설명으로 옳은 것은?",
+    "choices": [
+      "항상 여러 개의 값을 반환할 수 없다.",
+      "메인 쿼리의 매 행마다 값을 참조하여 반복적으로 실행된다.",
+      "항상 EXISTS 연산자와 함께만 사용된다.",
+      "메인 쿼리와 독립적으로 한 번만 실행되어 그 결과를 메인 쿼리가 활용한다."
+    ],
+    "answer_index": 3,
+    "explanation": "비상관 서브쿼리는 메인 쿼리의 컬럼을 참조하지 않으므로 메인 쿼리와 독립적으로 한 번만 실행되고, 그 결과를 메인 쿼리가 그대로 이용한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 HAVING 절에서 서브쿼리를 사용할 수 있는지에 대한 설명으로 옳은 것은?",
+    "choices": [
+      "HAVING 절의 서브쿼리는 항상 다중 행만 반환해야 한다.",
+      "HAVING 절에는 어떠한 경우에도 서브쿼리를 사용할 수 없다.",
+      "서브쿼리는 WHERE 절에서만 사용 가능하다.",
+      "그룹별 집계 결과를 다른 집계 값(서브쿼리 결과 등)과 비교하는 조건을 HAVING 절의 서브쿼리로 표현할 수 있다."
+    ],
+    "answer_index": 3,
+    "explanation": "HAVING 절에서도 서브쿼리를 사용할 수 있으며, 예를 들어 그룹별 평균이 전체 평균(서브쿼리로 계산)보다 큰 그룹만 조회하는 등의 조건을 표현할 수 있다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 SELECT 절에 사용된 서브쿼리(스칼라 서브쿼리)에 대한 제약으로 가장 옳은 것은?",
+    "choices": [
+      "반드시 정확히 하나의 값(단일 행, 단일 컬럼)만 반환해야 한다.",
+      "반드시 메인 쿼리의 컬럼을 참조해야 한다.",
+      "반드시 GROUP BY와 함께 사용해야 한다.",
+      "여러 행을 반환해도 자동으로 첫 행만 사용되어 문제가 없다."
+    ],
+    "answer_index": 0,
+    "explanation": "SELECT 절에 사용되는 서브쿼리는 각 행마다 정확히 하나의 값을 반환해야 하며, 여러 행이 반환되면 런타임 오류가 발생한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "전체 사원 평균 급여보다 높은 급여를 받는 사원을 조회하는 SQL 작성 방식으로 가장 적절한 것은?",
+    "choices": [
+      "HAVING SALARY > AVG(SALARY)",
+      "WHERE SALARY > AVG(SALARY)",
+      "GROUP BY SALARY > AVG(SALARY)",
+      "WHERE SALARY > (SELECT AVG(SALARY) FROM EMPLOYEE)"
+    ],
+    "answer_index": 3,
+    "explanation": "전체 평균 급여는 별도의 단일 행 서브쿼리로 계산하여 WHERE 절의 비교 대상으로 사용해야 한다. WHERE 절에는 집계 함수를 직접 사용할 수 없으므로 'WHERE SALARY > AVG(SALARY)'는 문법 오류가 된다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 FROM 절의 서브쿼리(인라인 뷰) 사용 시 일반적으로 요구되는 사항은?",
+    "choices": [
+      "인라인 뷰는 반드시 다른 서브쿼리를 포함해야 한다.",
+      "인라인 뷰에 별칭(alias)을 부여하는 것이 일반적으로 요구되거나 권장된다.",
+      "인라인 뷰는 절대 WHERE 조건을 포함할 수 없다.",
+      "인라인 뷰는 반드시 GROUP BY를 포함해야만 한다."
+    ],
+    "answer_index": 1,
+    "explanation": "FROM 절의 서브쿼리(인라인 뷰)는 하나의 테이블처럼 취급되므로, 대부분의 DBMS에서 별칭을 부여하도록 요구하거나 강력히 권장한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 상관 서브쿼리를 사용하는 대표적인 상황으로 가장 적절한 것은?",
+    "choices": [
+      "각 부서별로 그 부서 내에서 급여가 가장 높은 사원을 찾는 것처럼, 그룹(부서) 단위 비교가 메인 쿼리의 각 행마다 달라져야 하는 경우",
+      "서브쿼리 없이도 동일 테이블 하나만으로 충분한 단순 SELECT의 경우",
+      "고정된 상수 값과 단순 비교만 하는 경우",
+      "테이블 전체의 총 행 수를 한 번만 계산하는 경우"
+    ],
+    "answer_index": 0,
+    "explanation": "상관 서브쿼리는 메인 쿼리의 각 행(예: 각 사원)마다 그 행이 속한 그룹(부서) 기준으로 다시 계산되어야 하는 조건, 예컨대 '자기 부서 내 최고 급여 여부' 같은 조건에 적합하다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 IN 연산자와 서브쿼리를 함께 사용할 때의 설명으로 옳은 것은?",
+    "choices": [
+      "IN은 단일 행만 반환하는 서브쿼리와만 사용할 수 있다.",
+      "서브쿼리가 반환하는 값들의 목록 중 하나와 일치하면 조건을 만족한다.",
+      "IN은 서브쿼리와 함께 사용할 수 없고 상수 목록에만 사용할 수 있다.",
+      "서브쿼리가 반환하는 모든 값과 동시에 일치해야 조건을 만족한다."
+    ],
+    "answer_index": 1,
+    "explanation": "IN 연산자는 서브쿼리가 반환하는 여러 값 중 어느 하나와 일치하면 조건을 참으로 평가하며, 다중 행 서브쿼리와 자주 함께 사용된다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 NOT IN과 NOT EXISTS의 차이에 대한 설명으로 가장 옳은 것은?",
+    "choices": [
+      "NOT IN은 비교 목록에 NULL이 있으면 예상과 다른(의도치 않게 빈) 결과를 낼 수 있지만, NOT EXISTS는 상관 서브쿼리 방식으로 동작하여 이러한 NULL 문제에서 비교적 자유롭다.",
+      "NOT EXISTS는 서브쿼리 없이는 사용할 수 없는 반면 NOT IN은 서브쿼리 전용 연산자이다.",
+      "NOT IN은 상관 서브쿼리 전용이고 NOT EXISTS는 비상관 서브쿼리 전용이다.",
+      "NOT IN과 NOT EXISTS는 모든 상황에서 완전히 동일하게 동작하여 차이가 없다."
+    ],
+    "answer_index": 0,
+    "explanation": "NOT IN은 비교 대상 목록에 NULL이 포함되면 전체 조건이 예상과 달리 어떤 행도 만족시키지 못하는 문제가 발생할 수 있는 반면, NOT EXISTS는 행의 존재 여부만 상관 서브쿼리 방식으로 판단하므로 이러한 NULL 관련 함정에 비교적 안전하다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 SQL 'SELECT DEPT_ID, (SELECT DEPT_NAME FROM DEPARTMENT D WHERE D.DEPT_ID = E.DEPT_ID) AS DNAME FROM EMPLOYEE E;'에 대한 설명으로 가장 옳은 것은?",
+    "choices": [
+      "HAVING 절에서만 사용 가능한 문법이다.",
+      "FROM 절에 사용된 인라인 뷰이다.",
+      "SELECT 절에 사용된 상관 서브쿼리로, EMPLOYEE의 각 행마다 해당 부서명을 조회하는 스칼라 서브쿼리이다.",
+      "이 서브쿼리는 항상 여러 행을 반환하므로 오류가 발생한다."
+    ],
+    "answer_index": 2,
+    "explanation": "이 서브쿼리는 SELECT 절 안에서 외부 쿼리의 E.DEPT_ID를 참조(상관)하여 각 사원 행마다 대응하는 부서명을 조회하는 스칼라(단일 값) 서브쿼리이다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 서브쿼리를 다중 컬럼(여러 컬럼을 동시에) 비교에 사용하는 경우에 대한 설명으로 옳은 것은?",
+    "choices": [
+      "다중 컬럼 비교는 반드시 UNION을 사용해야만 가능하다.",
+      "다중 컬럼 비교는 GROUP BY 절에서만 가능하다.",
+      "WHERE (컬럼1, 컬럼2) IN (SELECT 컬럼A, 컬럼B FROM ...) 형태로 여러 컬럼을 동시에 비교할 수 있다.",
+      "서브쿼리는 항상 하나의 컬럼만 반환할 수 있으므로 다중 컬럼 비교는 불가능하다."
+    ],
+    "answer_index": 2,
+    "explanation": "일부 표준 SQL 및 여러 DBMS에서는 WHERE (컬럼1, 컬럼2) IN (서브쿼리)와 같이 괄호로 묶은 여러 컬럼을 서브쿼리의 여러 컬럼과 동시에 비교하는 다중 컬럼 서브쿼리를 지원한다."
+  },
+  {
+    "subject": "sql_basic",
+    "question": "다음 중 서브쿼리 사용 시 일반적으로 주의해야 할 사항으로 가장 거리가 먼 것은?",
+    "choices": [
+      "상관 서브쿼리는 메인 쿼리의 행 수만큼 반복 실행될 수 있어 성능에 영향을 줄 수 있음을 고려해야 한다.",
+      "NULL이 포함될 수 있는 서브쿼리 결과와 NOT IN을 함께 사용할 때 발생할 수 있는 문제를 고려해야 한다.",
+      "서브쿼리가 반환하는 행/컬럼 개수가 사용하는 연산자(=, IN 등)와 맞는지 확인해야 한다.",
+      "서브쿼리는 반드시 메인 쿼리보다 먼저 화면에 SELECT * 형태로 출력되어야 한다."
+    ],
+    "answer_index": 3,
+    "explanation": "서브쿼리는 SQL 문 내부에서 값을 제공하는 역할을 할 뿐, 그 자체로 별도로 SELECT * 형태로 화면에 출력되어야 하는 것은 아니다. 나머지 보기들은 서브쿼리 사용 시 실제로 주의해야 할 사항들이다."
   }
 ]
