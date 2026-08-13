@@ -4,7 +4,7 @@
 
 **Goal:** 매일 발행되는 학습 페이지를 "영단어/숙어 · 성경구절 · SQLD" 3개 탭으로 재구성하고, SQLD(SQL 개발자 자격증) 문제 풀이 탭을 새로 추가한다.
 
-**Architecture:** 기존 `render-page.js`가 만들던 세로 나열 페이지를 클라이언트 사이드 탭(페이지 이동 없음)으로 감싼다. SQLD 문제는 다른 콘텐츠처럼 Supabase 테이블에 저장하고 동일한 `rotation.js` 순환 로직(40문제/일, 10일 주기)으로 매일 선택하되, 단어/숙어와 달리 매일 새로 생성하지 않고 문제은행에서 그대로 꺼내 보여준다. 정답 체크는 기존 `quiz_results` 테이블을 그대로 재사용(`item_type='sqld'`)한다.
+**Architecture:** 기존 `render-page.js`가 만들던 세로 나열 페이지를 클라이언트 사이드 탭(페이지 이동 없음)으로 감싼다. SQLD 문제는 다른 콘텐츠처럼 Supabase 테이블에 저장하고 동일한 `rotation.js` 순환 로직(40문제/일, 8일 주기)으로 매일 선택하되, 단어/숙어와 달리 매일 새로 생성하지 않고 문제은행에서 그대로 꺼내 보여준다. 정답 체크는 기존 `quiz_results` 테이블을 그대로 재사용(`item_type='sqld'`)한다.
 
 **Tech Stack:** Node.js 22 (내장 `fetch`, `node:test`, 외부 npm 의존성 없음), Supabase(Postgres + PostgREST), 순수 HTML/CSS/JS.
 
@@ -15,7 +15,7 @@
 - Publishable key(`sb_publishable_Or19pdIs6WAUH-tWaxbj-Q_Ku0qkiC2`)와 Project URL(`https://jlsylkdjsjiiuitmwdpz.supabase.co`)은 공개돼도 안전하므로 코드에 그대로 넣는다 (기존과 동일).
 - 모든 날짜 계산은 KST(Asia/Seoul) 캘린더 날짜 기준이다 (기존 `rotation.js`/`todayInKST()` 재사용).
 - **SQLD 문제는 실제 KDATA 기출문제 원문을 복제하지 않는다** — 기출 유형·난이도만 참고해 자체 제작한다.
-- SQLD 콘텐츠 규모: 총 400문제 (데이터 모델링의 이해 80문제 + SQL 기본 및 활용 320문제), 매일 40문제씩 10일 주기로 순환, 기존 콘텐츠와 동일한 epoch(`2026-08-01`)를 공유한다.
+- SQLD 콘텐츠 규모: 총 320문제 (데이터 모델링의 이해 64문제 + SQL 기본 및 활용 256문제 — 시험이 다음 주 토요일이라 내일(금)부터 다음 주 금요일까지 8일치만 준비), 매일 40문제씩 8일 주기로 순환, 기존 콘텐츠와 동일한 epoch(`2026-08-01`)를 공유한다.
 - 탭 UI는 클라이언트 사이드 전환만 한다 (페이지 이동 없음, 탭 선택 상태 저장 안 함, 기본 활성 탭은 "영단어/숙어").
 - 이미 프로덕션 Supabase에는 `words`(600)/`idioms`(100)/`verses`(66)가 이미 시드되어 있다. 새로 추가하는 시드 로직은 **테이블별로** 이미 데이터가 있으면 건너뛰고 없으면만 넣어야 한다 (전체를 막아버리는 방식이면 안 됨).
 
@@ -74,14 +74,14 @@ git commit -m "feat: add sqld_questions table and extend quiz_results item_type"
 
 ---
 
-### Task 2: SQLD 콘텐츠 — 데이터 모델링의 이해 (80문제)
+### Task 2: SQLD 콘텐츠 — 데이터 모델링의 이해 (64문제)
 
 **Files:**
 - Create: `data/sqld_questions.json`
 - Test: `data/validate-sqld.test.js`
 
 **Interfaces:**
-- Produces: `data/sqld_questions.json` — 이 시점엔 정확히 80개, 전부 `subject: "data_modeling"`인 `{ subject, question, choices, answer_index, explanation }` 배열.
+- Produces: `data/sqld_questions.json` — 이 시점엔 정확히 64개, 전부 `subject: "data_modeling"`인 `{ subject, question, choices, answer_index, explanation }` 배열.
 
 **주제 범위 (참고, 기출 유형만 참고하고 원문은 복제하지 않는다):** 엔터티/속성/관계, 식별자(주식별자/보조식별자), 정규화(1~3정규형, 반정규화), ERD 표기법, 슈퍼타입/서브타입, 트랜잭션의 특성(ACID), 인덱스 기본 개념 등 실제 SQLD 1과목 범위.
 
@@ -93,8 +93,8 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const questions = require('./sqld_questions.json');
 
-test('sqld_questions.json has exactly 80 data_modeling questions so far', () => {
-  assert.equal(questions.length, 80);
+test('sqld_questions.json has exactly 64 data_modeling questions so far', () => {
+  assert.equal(questions.length, 64);
   for (const q of questions) {
     assert.equal(q.subject, 'data_modeling');
   }
@@ -128,7 +128,7 @@ Expected: FAIL (`sqld_questions.json`이 없어서 모듈을 찾을 수 없음)
 
 - [ ] **Step 3: 콘텐츠 작성**
 
-`data/sqld_questions.json`에 데이터 모델링의 이해 과목 4지선다 문제 80개를 아래 형식으로 작성한다 (전부 `subject: "data_modeling"`):
+`data/sqld_questions.json`에 데이터 모델링의 이해 과목 4지선다 문제 64개를 아래 형식으로 작성한다 (전부 `subject: "data_modeling"`):
 
 ```json
 [
@@ -147,7 +147,7 @@ Expected: FAIL (`sqld_questions.json`이 없어서 모듈을 찾을 수 없음)
 ]
 ```
 
-(실제 작업 시 80개 전체를 이 형식으로 채운다. 중복 질문 금지.)
+(실제 작업 시 64개 전체를 이 형식으로 채운다. 중복 질문 금지.)
 
 - [ ] **Step 4: 테스트 통과 확인**
 
@@ -158,20 +158,20 @@ Expected: PASS (2 tests)
 
 ```bash
 git add data/sqld_questions.json data/validate-sqld.test.js
-git commit -m "content: add 80 SQLD data-modeling questions"
+git commit -m "content: add 64 SQLD data-modeling questions"
 ```
 
 ---
 
-### Task 3: SQLD 콘텐츠 — SQL 기본 및 활용 Part 1 (160문제 추가)
+### Task 3: SQLD 콘텐츠 — SQL 기본 및 활용 Part 1 (128문제 추가)
 
 **Files:**
-- Modify: `data/sqld_questions.json` (기존 80개에 160개 추가, 총 240개)
+- Modify: `data/sqld_questions.json` (기존 64개에 128개 추가, 총 192개)
 - Modify: `data/validate-sqld.test.js`
 
 **Interfaces:**
-- Consumes: Task 2가 만든 `data/sqld_questions.json`의 기존 80개 `data_modeling` 문제 (그대로 유지, 앞에 둔다).
-- Produces: `data/sqld_questions.json` — 이 시점엔 정확히 240개 (`data_modeling` 80 + `sql_basic` 160).
+- Consumes: Task 2가 만든 `data/sqld_questions.json`의 기존 64개 `data_modeling` 문제 (그대로 유지, 앞에 둔다).
+- Produces: `data/sqld_questions.json` — 이 시점엔 정확히 192개 (`data_modeling` 64 + `sql_basic` 128).
 
 **주제 범위:** SELECT 기본 문법, WHERE, GROUP BY/HAVING, ORDER BY, 조인(INNER/OUTER/CROSS/SELF), 서브쿼리 등 실제 SQLD 2과목 전반부 범위.
 
@@ -180,23 +180,23 @@ git commit -m "content: add 80 SQLD data-modeling questions"
 `data/validate-sqld.test.js`의 첫 번째 테스트를 아래로 교체한다 (두 번째 "every sqld question..." 테스트는 그대로 둔다):
 
 ```js
-test('sqld_questions.json has 240 questions so far: 80 data_modeling + 160 sql_basic', () => {
-  assert.equal(questions.length, 240);
+test('sqld_questions.json has 192 questions so far: 64 data_modeling + 128 sql_basic', () => {
+  assert.equal(questions.length, 192);
   const dataModeling = questions.filter(q => q.subject === 'data_modeling');
   const sqlBasic = questions.filter(q => q.subject === 'sql_basic');
-  assert.equal(dataModeling.length, 80);
-  assert.equal(sqlBasic.length, 160);
+  assert.equal(dataModeling.length, 64);
+  assert.equal(sqlBasic.length, 128);
 });
 ```
 
 - [ ] **Step 2: 테스트 실패 확인**
 
 Run: `node --test data/validate-sqld.test.js`
-Expected: FAIL (현재 80개뿐이라 240개 기대와 불일치)
+Expected: FAIL (현재 64개뿐이라 192개 기대와 불일치)
 
 - [ ] **Step 3: 콘텐츠 추가**
 
-`data/sqld_questions.json`의 기존 80개 배열 뒤에 SQL 기본 및 활용 과목(`subject: "sql_basic"`) 문제 160개를 같은 스키마로 추가한다. 기존 80개는 순서/내용을 바꾸지 않는다.
+`data/sqld_questions.json`의 기존 64개 배열 뒤에 SQL 기본 및 활용 과목(`subject: "sql_basic"`) 문제 128개를 같은 스키마로 추가한다. 기존 64개는 순서/내용을 바꾸지 않는다.
 
 - [ ] **Step 4: 테스트 통과 확인**
 
@@ -207,20 +207,20 @@ Expected: PASS (2 tests)
 
 ```bash
 git add data/sqld_questions.json data/validate-sqld.test.js
-git commit -m "content: add 160 SQLD sql-basic questions (part 1 of 2)"
+git commit -m "content: add 128 SQLD sql-basic questions (part 1 of 2)"
 ```
 
 ---
 
-### Task 4: SQLD 콘텐츠 — SQL 기본 및 활용 Part 2 (160문제 추가, 최종 400문제)
+### Task 4: SQLD 콘텐츠 — SQL 기본 및 활용 Part 2 (128문제 추가, 최종 320문제)
 
 **Files:**
-- Modify: `data/sqld_questions.json` (기존 240개에 160개 추가, 총 400개 — 최종)
+- Modify: `data/sqld_questions.json` (기존 192개에 128개 추가, 총 320개 — 최종)
 - Modify: `data/validate-sqld.test.js`
 
 **Interfaces:**
-- Consumes: Task 3까지 만든 240개 (그대로 유지, 앞에 둔다).
-- Produces: `data/sqld_questions.json` — 최종 정확히 400개 (`data_modeling` 80 + `sql_basic` 320).
+- Consumes: Task 3까지 만든 192개 (그대로 유지, 앞에 둔다).
+- Produces: `data/sqld_questions.json` — 최종 정확히 320개 (`data_modeling` 64 + `sql_basic` 256).
 
 **주제 범위:** 집합 연산자(UNION/UNION ALL/INTERSECT/MINUS), DML(INSERT/UPDATE/DELETE/MERGE), DDL/제약조건, 윈도우 함수, 계층형 질의(CONNECT BY 등), 그룹 함수(ROLLUP/CUBE) 등 나머지 SQLD 2과목 범위.
 
@@ -229,23 +229,23 @@ git commit -m "content: add 160 SQLD sql-basic questions (part 1 of 2)"
 `data/validate-sqld.test.js`의 첫 번째 테스트를 최종 버전으로 교체한다:
 
 ```js
-test('sqld_questions.json has the final 400 questions: 80 data_modeling + 320 sql_basic', () => {
-  assert.equal(questions.length, 400);
+test('sqld_questions.json has the final 320 questions: 64 data_modeling + 256 sql_basic', () => {
+  assert.equal(questions.length, 320);
   const dataModeling = questions.filter(q => q.subject === 'data_modeling');
   const sqlBasic = questions.filter(q => q.subject === 'sql_basic');
-  assert.equal(dataModeling.length, 80);
-  assert.equal(sqlBasic.length, 320);
+  assert.equal(dataModeling.length, 64);
+  assert.equal(sqlBasic.length, 256);
 });
 ```
 
 - [ ] **Step 2: 테스트 실패 확인**
 
 Run: `node --test data/validate-sqld.test.js`
-Expected: FAIL (현재 240개뿐)
+Expected: FAIL (현재 192개뿐)
 
 - [ ] **Step 3: 콘텐츠 추가**
 
-기존 240개 뒤에 나머지 SQL 기본/활용 문제 160개를 추가해 총 400개(데이터모델링 80 + SQL기본활용 320)를 완성한다.
+기존 192개 뒤에 나머지 SQL 기본/활용 문제 128개를 추가해 총 320개(데이터모델링 64 + SQL기본활용 256)를 완성한다.
 
 - [ ] **Step 4: 테스트 통과 확인**
 
@@ -256,7 +256,7 @@ Expected: PASS (2 tests)
 
 ```bash
 git add data/sqld_questions.json data/validate-sqld.test.js
-git commit -m "content: add final 160 SQLD sql-basic questions (400 total)"
+git commit -m "content: add final 128 SQLD sql-basic questions (320 total)"
 ```
 
 ---
@@ -407,7 +407,7 @@ git commit -m "refactor: make seed.js skip already-populated tables instead of b
 
 **Interfaces:**
 - Consumes: `pickWindow`, `pickIndex`, `pickTranslation`, `computeDayIndex`, `todayInKST` (rotation.js, 기존), `fetchAll` (supabase-rest.js, 기존)
-- Produces: `selectToday({words, idioms, verses, sqldQuestions}, today)`가 이제 `sqldQuestions` 필드(40개)도 포함해서 반환한다: `{dayIndex, words, idiom, verse, sqldQuestions, translation}`. `validateCounts({words, idioms, verses, sqldQuestions})`도 `sqldQuestions.length === 400`을 검증한다.
+- Produces: `selectToday({words, idioms, verses, sqldQuestions}, today)`가 이제 `sqldQuestions` 필드(40개)도 포함해서 반환한다: `{dayIndex, words, idiom, verse, sqldQuestions, translation}`. `validateCounts({words, idioms, verses, sqldQuestions})`도 `sqldQuestions.length === 320`을 검증한다.
 
 - [ ] **Step 1: 실패하는 테스트로 갱신**
 
@@ -419,7 +419,7 @@ const assert = require('node:assert/strict');
 const { selectToday, EPOCH, validateCounts } = require('./select-today');
 
 function makeSqldFixture() {
-  return Array.from({ length: 400 }, (_, i) => ({ id: i + 1, question: `sqld${i}` }));
+  return Array.from({ length: 320 }, (_, i) => ({ id: i + 1, question: `sqld${i}` }));
 }
 
 test('selectToday picks the first window/idiom/verse/sqld-block on the epoch date', () => {
@@ -499,7 +499,7 @@ test('validateCounts throws naming sqldQuestions when its count is wrong', () =>
   const words = Array.from({ length: 600 }, (_, i) => ({ id: i + 1 }));
   const idioms = Array.from({ length: 100 }, (_, i) => ({ id: i + 1 }));
   const verses = Array.from({ length: 66 }, (_, i) => ({ id: i + 1 }));
-  const sqldQuestions = Array.from({ length: 399 }, (_, i) => ({ id: i + 1 }));
+  const sqldQuestions = Array.from({ length: 319 }, (_, i) => ({ id: i + 1 }));
 
   assert.throws(() => validateCounts({ words, idioms, verses, sqldQuestions }), /sqldQuestions/);
 });
@@ -520,7 +520,7 @@ const { fetchAll } = require('./supabase-rest');
 
 const EPOCH = new Date(Date.UTC(2026, 7, 1));
 
-const EXPECTED_COUNTS = { words: 600, idioms: 100, verses: 66, sqldQuestions: 400 };
+const EXPECTED_COUNTS = { words: 600, idioms: 100, verses: 66, sqldQuestions: 320 };
 
 function validateCounts({ words, idioms, verses, sqldQuestions }) {
   const actual = { words, idioms, verses, sqldQuestions };
@@ -1581,8 +1581,8 @@ git commit -m "style: add tab navigation and SQLD question styles"
 
 - [ ] Task 1의 `supabase/migrations/0002_add_sqld.sql`을 사용자에게 Supabase SQL Editor에서 실행하도록 안내
 - [ ] `node -e "require('./scripts/supabase-rest').fetchAll('sqld_questions').then(r=>console.log(r.length))"`로 테이블 존재 확인 (0이어야 정상)
-- [ ] 사용자에게 `SUPABASE_SERVICE_ROLE_KEY=<secret key> node scripts/seed.js`를 로컬 터미널에서 실행하도록 안내 — Task 5의 새 `seedTable` 덕분에 이미 채워진 `words`/`idioms`/`verses`는 건너뛰고 `sqld_questions` 400건만 새로 들어간다
-- [ ] publishable key로 `fetchAll('sqld_questions')`이 400을 반환하는지 확인
+- [ ] 사용자에게 `SUPABASE_SERVICE_ROLE_KEY=<secret key> node scripts/seed.js`를 로컬 터미널에서 실행하도록 안내 — Task 5의 새 `seedTable` 덕분에 이미 채워진 `words`/`idioms`/`verses`는 건너뛰고 `sqld_questions` 320건만 새로 들어간다
+- [ ] publishable key로 `fetchAll('sqld_questions')`이 320을 반환하는지 확인
 - [ ] `node scripts/select-today.js`를 실행해 `sqldQuestions` 40개가 정상적으로 포함되는지 확인
 - [ ] 기존 클라우드 루틴(`trig_01EACRQrzMFBbyW7UXD6rbZG`)의 프롬프트를 `RemoteTrigger` `update`로 갱신 — 2단계에 아래 내용 추가:
   - "`select-today.js` 출력의 `sqldQuestions` 배열(40개)을 그대로 사용한다. 각 항목의 `answer_index`를 `answerIndex`로 이름만 바꿔서 옮긴다 (LLM이 새로 만들 필요 없음, 그대로 복사)."
@@ -1595,6 +1595,6 @@ git commit -m "style: add tab navigation and SQLD question styles"
 
 ## Self-Review 결과
 
-- **스펙 커버리지**: 마이그레이션(Task 1) · SQLD 콘텐츠 400문제(Task 2~4) · 시드 재설계(Task 5) · 일일 선택 로직 확장(Task 6) · 탭 렌더링/SQLD 렌더링(Task 7) · 탭 전환(Task 8) · SQLD 정답 체크/정답률(Task 9) · 스타일(Task 10) · 실제 반영/검증(Task 11) 모두 스펙 문서의 각 섹션과 1:1로 대응됨.
+- **스펙 커버리지**: 마이그레이션(Task 1) · SQLD 콘텐츠 320문제(Task 2~4) · 시드 재설계(Task 5) · 일일 선택 로직 확장(Task 6) · 탭 렌더링/SQLD 렌더링(Task 7) · 탭 전환(Task 8) · SQLD 정답 체크/정답률(Task 9) · 스타일(Task 10) · 실제 반영/검증(Task 11) 모두 스펙 문서의 각 섹션과 1:1로 대응됨.
 - **플레이스홀더 스캔**: "TODO"/"나중에" 없음. 콘텐츠 작성(Task 2~4)은 실제 항목을 채우는 작업이라 정확한 스키마·개수·주제 범위를 명시해 모호함이 없게 함.
 - **타입/이름 일관성 확인**: `selectToday`가 반환하는 `sqldQuestions`(id, subject, question, choices, answer_index — Supabase raw 컬럼명)가 Task 11의 클라우드 루틴 프롬프트에서 `answerIndex`로 리네임되어 `render-page.js`의 `validateDay`/`renderSqldQuestion`이 기대하는 필드명(`answerIndex`)과 정확히 일치하도록 맞춤. `data-sqld-id`/`data-answer-index` (HTML) ↔ `li.dataset.sqldId`/`li.dataset.answerIndex` (client.js) 매핑도 일치.
