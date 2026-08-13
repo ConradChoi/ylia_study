@@ -27,6 +27,14 @@ function makeValidDay(overrides = {}) {
       originalText: 'בְּרֵאשִׁית בָּרָא אֱלֹהִים',
       vocab: [{ word: 'בְּרֵאשִׁית', translit: 'bereshit', gloss: '태초에' }],
     },
+    sqldQuestions: Array.from({ length: 40 }, (_, i) => ({
+      id: i + 1,
+      subject: i < 8 ? 'data_modeling' : 'sql_basic',
+      question: `SQLD 문제 ${i}?`,
+      choices: [`보기A${i}`, `보기B${i}`, `보기C${i}`, `보기D${i}`],
+      answerIndex: i % 4,
+      explanation: `해설 ${i}`,
+    })),
   };
   return { ...base, ...overrides };
 }
@@ -59,6 +67,29 @@ test('renderPage emits data-item-type and data-item-id for each quiz entry', () 
 
   assert.match(html, /data-item-type="idiom" data-item-id="10"/);
   assert.match(html, /data-item-type="word" data-item-id="1"/);
+});
+
+test('renderPage renders three tabs (words, verse, sqld) with the words tab active by default', () => {
+  const html = renderPage(makeValidDay());
+
+  assert.match(html, /<button type="button" class="tab-btn active" data-tab="words">/);
+  assert.match(html, /<button type="button" class="tab-btn" data-tab="verse">/);
+  assert.match(html, /<button type="button" class="tab-btn" data-tab="sqld">/);
+  assert.match(html, /<div id="tab-words" class="tab-panel active">/);
+  assert.match(html, /<div id="tab-verse" class="tab-panel">/);
+  assert.match(html, /<div id="tab-sqld" class="tab-panel">/);
+  assert.match(html, /<script src="\/assets\/tabs\.js"><\/script>/);
+});
+
+test('renderPage renders each SQLD question with its subject label, choices, and data attributes for the answer', () => {
+  const day = makeValidDay();
+  const html = renderPage(day);
+
+  assert.match(html, /\[데이터 모델링의 이해\]/);
+  assert.match(html, /\[SQL 기본 및 활용\]/);
+  assert.match(html, /SQLD 문제 0\?/);
+  assert.match(html, /보기A0/);
+  assert.match(html, /data-sqld-id="1" data-answer-index="0"/);
 });
 
 test('validateDay throws when a word is missing its sentence', () => {
@@ -115,6 +146,34 @@ test('validateDay throws when verse.vocab is empty', () => {
   day.verse = { ...day.verse, vocab: [] };
 
   assert.throws(() => validateDay(day), /vocab must be a non-empty array/);
+});
+
+test('validateDay throws when sqldQuestions is not exactly 40 items', () => {
+  const day = makeValidDay();
+  day.sqldQuestions = day.sqldQuestions.slice(0, 39);
+
+  assert.throws(() => validateDay(day), /sqldQuestions must be an array of exactly 40 items/);
+});
+
+test('validateDay throws when a sqldQuestion has an invalid subject', () => {
+  const day = makeValidDay();
+  day.sqldQuestions[0] = { ...day.sqldQuestions[0], subject: 'sql_advanced' };
+
+  assert.throws(() => validateDay(day), /subject/);
+});
+
+test('validateDay throws when a sqldQuestion does not have exactly 4 choices', () => {
+  const day = makeValidDay();
+  day.sqldQuestions[0] = { ...day.sqldQuestions[0], choices: ['only one'] };
+
+  assert.throws(() => validateDay(day), /choices must be an array of exactly 4 items/);
+});
+
+test('validateDay throws when a sqldQuestion has an out-of-range answerIndex', () => {
+  const day = makeValidDay();
+  day.sqldQuestions[0] = { ...day.sqldQuestions[0], answerIndex: 4 };
+
+  assert.throws(() => validateDay(day), /answerIndex/);
 });
 
 test('validateDay does not throw for a valid day', () => {

@@ -22,6 +22,12 @@ function requireNonEmptyString(value, label) {
   }
 }
 
+const SQLD_SUBJECTS = ['data_modeling', 'sql_basic'];
+const SQLD_SUBJECT_LABEL = {
+  data_modeling: '데이터 모델링의 이해',
+  sql_basic: 'SQL 기본 및 활용',
+};
+
 function validateDay(day) {
   if (!day || typeof day !== 'object') {
     throw new Error('validateDay: day must be an object');
@@ -73,6 +79,27 @@ function validateDay(day) {
   if (!Array.isArray(day.verse.vocab) || day.verse.vocab.length === 0) {
     throw new Error(`validateDay: day.verse.vocab must be a non-empty array (got ${Array.isArray(day.verse.vocab) ? 'empty array' : typeof day.verse.vocab})`);
   }
+
+  if (!Array.isArray(day.sqldQuestions) || day.sqldQuestions.length !== 40) {
+    throw new Error(`validateDay: day.sqldQuestions must be an array of exactly 40 items (got ${Array.isArray(day.sqldQuestions) ? day.sqldQuestions.length : typeof day.sqldQuestions})`);
+  }
+  day.sqldQuestions.forEach((q, i) => {
+    if (!isPositiveInteger(q && q.id)) {
+      throw new Error(`validateDay: day.sqldQuestions[${i}].id must be a positive integer (got ${JSON.stringify(q && q.id)})`);
+    }
+    if (!q || !SQLD_SUBJECTS.includes(q.subject)) {
+      throw new Error(`validateDay: day.sqldQuestions[${i}].subject must be 'data_modeling' or 'sql_basic' (got ${JSON.stringify(q && q.subject)})`);
+    }
+    requireNonEmptyString(q.question, `day.sqldQuestions[${i}].question`);
+    if (!Array.isArray(q.choices) || q.choices.length !== 4) {
+      throw new Error(`validateDay: day.sqldQuestions[${i}].choices must be an array of exactly 4 items (got ${Array.isArray(q.choices) ? q.choices.length : typeof q.choices})`);
+    }
+    q.choices.forEach((c, ci) => requireNonEmptyString(c, `day.sqldQuestions[${i}].choices[${ci}]`));
+    if (!Number.isInteger(q.answerIndex) || q.answerIndex < 0 || q.answerIndex > 3) {
+      throw new Error(`validateDay: day.sqldQuestions[${i}].answerIndex must be an integer between 0 and 3 (got ${JSON.stringify(q.answerIndex)})`);
+    }
+    requireNonEmptyString(q.explanation, `day.sqldQuestions[${i}].explanation`);
+  });
 }
 
 function renderWordRow(w) {
@@ -87,11 +114,29 @@ function renderQuizItem(q, i) {
   return `<li data-question-index="${i}" data-item-type="${escapeHtml(q.itemType)}" data-item-id="${q.itemId}" data-answer="${escapeHtml(q.answer)}"><p>${escapeHtml(q.question)}</p><input type="text" class="quiz-input" /><button type="button" class="quiz-check">확인</button> <span class="quiz-feedback"></span></li>`;
 }
 
+function renderSqldChoice(choice, index) {
+  return `<button type="button" class="sqld-choice" data-choice-index="${index}">${escapeHtml(choice)}</button>`;
+}
+
+function renderSqldQuestion(q) {
+  const choices = q.choices.map(renderSqldChoice).join('\n');
+  return `<li data-sqld-id="${q.id}" data-answer-index="${q.answerIndex}">
+  <p class="sqld-subject">[${escapeHtml(SQLD_SUBJECT_LABEL[q.subject])}]</p>
+  <p class="sqld-question">${escapeHtml(q.question)}</p>
+  <div class="sqld-choices">
+${choices}
+  </div>
+  <p class="sqld-feedback"></p>
+  <p class="sqld-explanation" hidden>${escapeHtml(q.explanation)}</p>
+</li>`;
+}
+
 function renderPage(day) {
   validateDay(day);
   const wordsRows = day.words.map(renderWordRow).join('\n');
   const vocabRows = day.verse.vocab.map(renderVocabRow).join('\n');
   const quizItems = day.quiz.map(renderQuizItem).join('\n');
+  const sqldItems = day.sqldQuestions.map(renderSqldQuestion).join('\n');
 
   return `<!doctype html>
 <html lang="ko">
@@ -108,6 +153,13 @@ function renderPage(day) {
   <p id="streak-badge" class="streak">연속 출석 확인 중...</p>
 </header>
 
+<nav class="tabs">
+  <button type="button" class="tab-btn active" data-tab="words">영단어/숙어</button>
+  <button type="button" class="tab-btn" data-tab="verse">성경구절</button>
+  <button type="button" class="tab-btn" data-tab="sqld">SQLD</button>
+</nav>
+
+<div id="tab-words" class="tab-panel active">
 <section class="words">
   <h2>오늘의 영단어</h2>
   <table>
@@ -130,7 +182,9 @@ ${wordsRows}
 ${quizItems}
   </ol>
 </section>
+</div>
 
+<div id="tab-verse" class="tab-panel">
 <section class="verse">
   <h2>오늘의 성경구절 — ${escapeHtml(day.verse.reference)}</h2>
   <p class="krv">${escapeHtml(day.verse.krv)}</p>
@@ -143,9 +197,21 @@ ${vocabRows}
     </tbody>
   </table>
 </section>
+</div>
+
+<div id="tab-sqld" class="tab-panel">
+<section class="sqld">
+  <h2>오늘의 SQLD 문제 (40문제)</h2>
+  <p id="sqld-score" class="sqld-score">정답률 확인 중...</p>
+  <ol class="sqld-list">
+${sqldItems}
+  </ol>
+</section>
+</div>
 
 <footer><a href="/archive/">지난 학습 기록 보기</a></footer>
 
+<script src="/assets/tabs.js"></script>
 <script src="/assets/client.js" data-quiz-date="${escapeHtml(day.date)}"></script>
 </body>
 </html>
