@@ -5,12 +5,6 @@ const { fetchAll } = require('./supabase-rest');
 
 const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-function assertTableEmpty(table, rows) {
-  if (Array.isArray(rows) && rows.length > 0) {
-    throw new Error(`${table} table already has ${rows.length} rows — seed.js is meant to run once; refusing to duplicate data. If you really want to re-seed, truncate the table first via the Supabase dashboard.`);
-  }
-}
-
 async function insertTable(table, rows) {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
     method: 'POST',
@@ -27,6 +21,16 @@ async function insertTable(table, rows) {
   }
 }
 
+async function seedTable(table, rows) {
+  const existing = await fetchAll(table);
+  if (Array.isArray(existing) && existing.length > 0) {
+    console.log(`${table}: 이미 ${existing.length}건 있음 — 건너뜀`);
+    return;
+  }
+  await insertTable(table, rows);
+  console.log(`${table}: ${rows.length}건 저장 완료`);
+}
+
 async function main() {
   if (!SERVICE_ROLE_KEY) {
     throw new Error('SUPABASE_SERVICE_ROLE_KEY 환경변수를 설정하세요 (Supabase 대시보드 > Settings > API Keys > Secret keys)');
@@ -35,22 +39,12 @@ async function main() {
   const words = JSON.parse(fs.readFileSync(path.join(dataDir, 'words.json'), 'utf8'));
   const idioms = JSON.parse(fs.readFileSync(path.join(dataDir, 'idioms.json'), 'utf8'));
   const verses = JSON.parse(fs.readFileSync(path.join(dataDir, 'verses.json'), 'utf8'));
+  const sqldQuestions = JSON.parse(fs.readFileSync(path.join(dataDir, 'sqld_questions.json'), 'utf8'));
 
-  const [existingWords, existingIdioms, existingVerses] = await Promise.all([
-    fetchAll('words'),
-    fetchAll('idioms'),
-    fetchAll('verses'),
-  ]);
-  assertTableEmpty('words', existingWords);
-  assertTableEmpty('idioms', existingIdioms);
-  assertTableEmpty('verses', existingVerses);
-
-  await insertTable('words', words);
-  console.log(`words: ${words.length}건 저장 완료`);
-  await insertTable('idioms', idioms);
-  console.log(`idioms: ${idioms.length}건 저장 완료`);
-  await insertTable('verses', verses);
-  console.log(`verses: ${verses.length}건 저장 완료`);
+  await seedTable('words', words);
+  await seedTable('idioms', idioms);
+  await seedTable('verses', verses);
+  await seedTable('sqld_questions', sqldQuestions);
 }
 
 if (require.main === module) {
@@ -60,4 +54,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { assertTableEmpty };
+module.exports = { seedTable };

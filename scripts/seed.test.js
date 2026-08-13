@@ -1,17 +1,35 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { assertTableEmpty } = require('./seed');
+const { seedTable } = require('./seed');
 
-test('assertTableEmpty does not throw when the table has no rows', () => {
-  assert.doesNotThrow(() => assertTableEmpty('words', []));
+function mockFetch({ existingRows = [], insertOk = true } = {}) {
+  const calls = [];
+  global.fetch = async (url, opts) => {
+    calls.push({ url, opts });
+    if (!opts || opts.method === undefined) {
+      return { ok: true, json: async () => existingRows };
+    }
+    return { ok: insertOk, status: 500, text: async () => 'insert failed', json: async () => [] };
+  };
+  return calls;
+}
+
+test('seedTable skips insertion when the table already has rows', async () => {
+  const calls = mockFetch({ existingRows: [{ id: 1 }, { id: 2 }] });
+
+  await seedTable('words', [{ word: 'a' }, { word: 'b' }, { word: 'c' }]);
+
+  const postCalls = calls.filter(c => c.opts && c.opts.method === 'POST');
+  assert.equal(postCalls.length, 0, 'expected no insert POST when table already has rows');
 });
 
-test('assertTableEmpty throws naming the table and row count when rows already exist', () => {
-  const rows = Array.from({ length: 600 }, (_, i) => ({ id: i + 1 }));
-  assert.throws(() => assertTableEmpty('words', rows), /words table already has 600 rows/);
-});
+test('seedTable inserts all rows when the table is empty', async () => {
+  const calls = mockFetch({ existingRows: [] });
 
-test('assertTableEmpty throws for idioms table with existing rows', () => {
-  const rows = [{ id: 1 }];
-  assert.throws(() => assertTableEmpty('idioms', rows), /idioms table already has 1 rows/);
+  await seedTable('sqld_questions', [{ question: 'q1' }, { question: 'q2' }]);
+
+  const postCalls = calls.filter(c => c.opts && c.opts.method === 'POST');
+  assert.equal(postCalls.length, 1, 'expected exactly one insert POST when table is empty');
+  const body = JSON.parse(postCalls[0].opts.body);
+  assert.equal(body.length, 2);
 });
