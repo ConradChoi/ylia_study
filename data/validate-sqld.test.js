@@ -2,12 +2,12 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const questions = require('./sqld_questions.json');
 
-test('sqld_questions.json has 192 questions so far: 64 data_modeling + 128 sql_basic', () => {
-  assert.equal(questions.length, 192);
+test('sqld_questions.json has the final 320 questions: 64 data_modeling + 256 sql_basic', () => {
+  assert.equal(questions.length, 320);
   const dataModeling = questions.filter(q => q.subject === 'data_modeling');
   const sqlBasic = questions.filter(q => q.subject === 'sql_basic');
   assert.equal(dataModeling.length, 64);
-  assert.equal(sqlBasic.length, 128);
+  assert.equal(sqlBasic.length, 256);
 });
 
 test('every sqld question has the required schema', () => {
