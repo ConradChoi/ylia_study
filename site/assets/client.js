@@ -80,12 +80,71 @@
     });
   }
 
+  function wireSqldQuiz() {
+    const scriptTag = document.querySelector('script[data-quiz-date]');
+    const quizDate = scriptTag ? scriptTag.dataset.quizDate : todayStr();
+
+    document.querySelectorAll('.sqld-list > li').forEach(li => {
+      const answerIndex = Number(li.dataset.answerIndex);
+      const sqldId = Number(li.dataset.sqldId);
+
+      li.querySelectorAll('.sqld-choice').forEach(button => {
+        button.addEventListener('click', async () => {
+          const feedback = li.querySelector('.sqld-feedback');
+          const explanation = li.querySelector('.sqld-explanation');
+          const question = li.querySelector('.sqld-question').textContent;
+          const chosenIndex = Number(button.dataset.choiceIndex);
+          const isCorrect = chosenIndex === answerIndex;
+
+          feedback.textContent = isCorrect ? '✅ 정답' : '❌ 오답';
+          explanation.hidden = false;
+
+          await fetch(`${SUPABASE_URL}/rest/v1/quiz_results`, {
+            method: 'POST',
+            headers: {
+              apikey: SUPABASE_KEY,
+              Authorization: `Bearer ${SUPABASE_KEY}`,
+              'Content-Type': 'application/json',
+              Prefer: 'return=minimal',
+            },
+            body: JSON.stringify([{
+              quiz_date: quizDate,
+              item_type: 'sqld',
+              item_id: sqldId,
+              question,
+              is_correct: isCorrect,
+            }]),
+          });
+
+          showSqldScore();
+        });
+      });
+    });
+  }
+
+  async function showSqldScore() {
+    const scriptTag = document.querySelector('script[data-quiz-date]');
+    const quizDate = scriptTag ? scriptTag.dataset.quizDate : todayStr();
+
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/quiz_results?select=is_correct&item_type=eq.sqld&quiz_date=eq.${quizDate}`,
+      { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
+    );
+    const rows = await res.json();
+    const correct = rows.filter(r => r.is_correct).length;
+
+    const scoreEl = document.getElementById('sqld-score');
+    if (scoreEl) scoreEl.textContent = `오늘 정답률: ${correct} / ${rows.length} (총 40문제 중 응시)`;
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     recordVisitAndShowStreak();
     wireQuiz();
+    wireSqldQuiz();
+    showSqldScore();
   });
 
   if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { todayStr, recordVisitAndShowStreak, wireQuiz };
+    module.exports = { todayStr, recordVisitAndShowStreak, wireQuiz, wireSqldQuiz, showSqldScore };
   }
 })();
