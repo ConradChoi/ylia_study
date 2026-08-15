@@ -90,6 +90,9 @@
 
       li.querySelectorAll('.sqld-choice').forEach(button => {
         button.addEventListener('click', async () => {
+          if (li.dataset.answered === 'true') return;
+          li.dataset.answered = 'true';
+
           const feedback = li.querySelector('.sqld-feedback');
           const explanation = li.querySelector('.sqld-explanation');
           const question = li.querySelector('.sqld-question').textContent;

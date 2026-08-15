@@ -111,6 +111,52 @@ test('wireSqldQuiz posts item_type "sqld" with the real sqld id and marks correc
   assert.equal(explanation.hidden, false);
 });
 
+test('wireSqldQuiz ignores a second answer on an already-answered question', async () => {
+  const { mod, calls } = loadClient();
+
+  const feedback = { textContent: '' };
+  const explanation = { hidden: true };
+  const questionP = { textContent: 'SQL에서 NULL 값을 비교할 때 사용하는 연산자는?' };
+  const handlers = [];
+  const makeButton = (choiceIndex) => ({
+    dataset: { choiceIndex },
+    addEventListener: (evt, handler) => {
+      handlers.push(handler);
+    },
+  });
+  const buttons = [makeButton('0'), makeButton('2')];
+  const li = {
+    dataset: { sqldId: '17', answerIndex: '2' },
+    querySelector: (sel) => {
+      if (sel === '.sqld-feedback') return feedback;
+      if (sel === '.sqld-explanation') return explanation;
+      if (sel === '.sqld-question') return questionP;
+      return null;
+    },
+    querySelectorAll: (sel) => (sel === '.sqld-choice' ? buttons : []),
+  };
+  const scriptTag = { dataset: { quizDate: '2026-08-11' } };
+
+  global.document.querySelector = (sel) => (sel === 'script[data-quiz-date]' ? scriptTag : null);
+  global.document.querySelectorAll = (sel) => (sel === '.sqld-list > li' ? [li] : []);
+
+  mod.wireSqldQuiz();
+  assert.equal(handlers.length, 2);
+
+  await handlers[0]();
+  const postsAfterFirst = calls.filter(
+    c => c.url.includes('quiz_results') && c.opts && c.opts.method === 'POST'
+  ).length;
+  assert.equal(postsAfterFirst, 1, 'expected exactly one POST after the first answer');
+
+  await handlers[1]();
+  const postsAfterSecond = calls.filter(
+    c => c.url.includes('quiz_results') && c.opts && c.opts.method === 'POST'
+  ).length;
+  assert.equal(postsAfterSecond, 1, 'expected no additional POST when re-answering the same question');
+  assert.equal(feedback.textContent, '❌ 오답', 'feedback from the first answer should be preserved');
+});
+
 test("showSqldScore reports how many of today's sqld answers were correct", async () => {
   const calls = [];
   global.fetch = (url) => {

@@ -24,7 +24,13 @@ async function insertTable(table, rows) {
 async function seedTable(table, rows) {
   const existing = await fetchAll(table);
   if (Array.isArray(existing) && existing.length > 0) {
-    console.log(`${table}: 이미 ${existing.length}건 있음 — 건너뜀`);
+    if (existing.length !== rows.length) {
+      console.warn(
+        `${table}: 이미 ${existing.length}건 있음, 로컬 파일은 ${rows.length}건 — 건너뜀 (내용이 바뀌었다면 Supabase 대시보드에서 테이블을 비우고 다시 실행하세요)`
+      );
+    } else {
+      console.log(`${table}: 이미 ${existing.length}건 있음 — 건너뜀`);
+    }
     return;
   }
   await insertTable(table, rows);
